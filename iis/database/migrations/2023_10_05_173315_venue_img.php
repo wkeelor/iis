@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('venue_img', function (Blueprint $table) {
             $table->id();
             //Foreign keys
-            $table->foreign('venue_id')->references('id')->on('events')->onDelete('cascade');
+            $table->foreign('venue_id')->references('id')->on('venues')->onDelete('cascade');
             //Other atributes
             $table->string('path');
           
