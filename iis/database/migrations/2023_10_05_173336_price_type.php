@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('price_type', function (Blueprint $table) {
             $table->id();
+            $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
+            $table->integer('price');
             $table->string('name');
-            $table->string('email')->unique();
-            $table->string('img');
-            $table->date('birthdate');
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        schema::dropIfExists('price_type');
     }
 };
