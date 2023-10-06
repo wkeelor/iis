@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('event_img', function (Blueprint $table) {
-            $table->id();
-            //Foreign keys
+        Schema::create('price_type', function (Blueprint $table) {
+            $table->id('id');
+
+            $table->unsignedBigInteger('event_id');
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
-            //Other atributes
-            $table->string('path');
-          
+            
+            $table->integer('price');
+            $table->string('name');
+            $table->timestamps();
         });
     }
 
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        schema::dropIfExists('event_img');
+        schema::dropIfExists('price_type');
     }
 };

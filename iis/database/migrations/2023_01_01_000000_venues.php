@@ -11,11 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('price_type', function (Blueprint $table) {
-            $table->id();
-            $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
-            $table->integer('price');
+        Schema::create('venues', function (Blueprint $table) {
+            $table->id('id');
+            //Other atributes
             $table->string('name');
+            $table->string('description');
+            $table->string('street');
+            $table->integer('street_number');
+            $table->integer('zip_code');
+            $table->string('province');
+            $table->string('country');
             $table->timestamps();
         });
     }
@@ -25,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        schema::dropIfExists('price_type');
+        Schema::dropIfExists('venues');
     }
 };

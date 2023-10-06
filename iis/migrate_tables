@@ -1,19 +1,19 @@
-php artisan migrate --pathdatabase/migrations/2023_10_05_173131_roles.php
-
-php artisan migrate --path=database/migrations/2014_10_12_000000_create_users_table.php
-php artisan migrate --path=database/migrations/2023_10_05_222051_users.php
-
 php artisan migrate --path=database/migrations/2023_10_05_173300_venues.php
 php artisan migrate --path=database/migrations/2023_10_05_173315_venue_img.php
 
 php artisan migrate --path=database/migrations/2023_10_05_173247_event_categories.php
+php artisan migrate --pathdatabase/migrations/2023_10_05_173131_roles.php
+
+php artisan migrate --path=database/migrations/2014_10_12_000000_create_users_table.php
+
 php artisan migrate --path=database/migrations/2023_10_05_173207_events.php
 php artisan migrate --path=database/migrations/2023_10_05_173231_event_img.php
 
-php artisan migrate --path=database/migrations/2023_10_05_173308_comments.php
-
 php artisan migrate --path=database/migrations/2023_10_05_173336_price_type.php
+
+php artisan migrate --path=database/migrations/2023_10_05_173308_comments.php
 php artisan migrate --path=database/migrations/2023_10_05_173332_ratings.php
+
 php artisan migrate --path=database/migrations/2023_10_05_173344_basket_item.php
 php artisan migrate --path=database/migrations/2023_10_05_173354_order_table.php
 php artisan migrate --path=database/migrations/2023_10_05_173358_order_item.php

@@ -12,8 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('events', function (Blueprint $table) {
-            $table->id();
+            $table->id('id');
             //Foreign keys
+            $table->unsignedBigInteger('host_id');
+            $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('venue_id');
+
             $table->foreign('host_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreign('venue_id')->references('id')->on('venues')->onDelete('cascade');

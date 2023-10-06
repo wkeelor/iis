@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('order_table', function (Blueprint $table) {
-            $table->id();
+            $table->id('id');
+            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
             $table->string('payment_method')->enum(['credit'], ['debit'], ['paypal']);

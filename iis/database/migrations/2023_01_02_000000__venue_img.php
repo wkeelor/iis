@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('venue_img', function (Blueprint $table) {
-            $table->id();
+            $table->id('id');
             //Foreign keys
+            $table->unsignedBigInteger('venue_id');
             $table->foreign('venue_id')->references('id')->on('venues')->onDelete('cascade');
             //Other atributes
             $table->string('path');
-          
         });
     }
 

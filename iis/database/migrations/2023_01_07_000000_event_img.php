@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ratings', function (Blueprint $table) {
-            $table->id();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        Schema::create('event_img', function (Blueprint $table) {
+            $table->id('id');
+            //Foreign keys
+            $table->unsignedBigInteger('event_id');
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
-
-            $table->string('message');
-            $table->integer('rating');
-
-            $table->timestamps();
+            //Other atributes
+            $table->string('path');
+          
         });
     }
 
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        schema::dropIfExists('ratings');
+        schema::dropIfExists('event_img');
     }
 };

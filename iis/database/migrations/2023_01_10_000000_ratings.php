@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('comments', function (Blueprint $table) {
-            $table->id();
-            //Foreign keys
-            $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
+        Schema::create('ratings', function (Blueprint $table) {
+            $table->id('id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('event_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('parent_id')->references('id')->on('comments')->onDelete('cascade');
-            
-            //Other atributes
-            $table->longText('message');
+            $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
+
+            $table->string('message');
+            $table->integer('rating');
+
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        schema::dropIfExists('comments');
+        schema::dropIfExists('ratings');
     }
 };
