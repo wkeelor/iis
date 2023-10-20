@@ -1,29 +1,29 @@
 <?php
 
 namespace App\Models;
-class Event{
-    public static function all_events(){
-        return [
-            [
-                'id' => 1,
-                'title' => 'Názov eventu 1',
-                'description' => 'Popis eventu 1'
-            ],
-            [
-                'id' => 2,
-                'title' => 'Názov eventu 2',
-                'description' => 'Popis eventu 2'
-            ]
-        ];
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Event extends Model
+{
+    use HasFactory;
+    protected $fillable = ['name','description','host_id','category_id','venue_id','start_time','end_time','capacity'];
+
+    // Define the relationship to the host (User)
+    public function host()
+    {
+        return $this->belongsTo(User::class, 'host_id');
+    }
+    // Define the relationship to the host (User)
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
+    // Define the relationship to the host (User)
+    public function venue()
+    {
+        return $this->belongsTo(Venue::class, 'host_id');
     }
 
-    public static function find($id){
-        $events = self::all_events();
-        foreach($events as $event){
-            if($event['id'] == $id){
-                return $event;
-            }
-        }
-        return null;
-    }
 }

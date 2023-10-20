@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'birthdate',
+        'login'
     ];
 
     /**
@@ -30,7 +32,6 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'remember_token',
     ];
 
     /**
@@ -42,4 +43,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // Define the events hosted by the user
+    public function hostedEvents()
+    {
+        return $this->hasMany(Event::class, 'host_id');
+    }
+
+
+    public function loginUser(Request $user_data){
+
+    }
 }

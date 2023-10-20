@@ -14,16 +14,17 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id('id');
             $table->string('name');
+            $table->string('login')->unique();
             $table->string('email')->unique();
-            $table->string('img');
-            $table->date('birthdate');
+            $table->date('birthdate')->nullable();;
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
 
             //foreign keys
-            $table->unsignedBigInteger('role_id');
+            //TODO delete nullable
+            $table->unsignedBigInteger('role_id')->nullable();;
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
-            
+
             $table->timestamps();
         });
     }
