@@ -23,7 +23,7 @@ class Event extends Model
     // Define the relationship to the host (User)
     public function venue()
     {
-        return $this->belongsTo(Venue::class, 'host_id');
+        return $this->belongsTo(Venue::class, 'venue_id');
     }
 
 }

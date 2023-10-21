@@ -32,7 +32,7 @@ class EventController extends Controller
             'start_time' => 'required',
             'end_time' => 'required',
             //'venue_id' => 'required',
-            'website' => 'regex:/^(https?:\/\/)([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/i',
+            'website' => ['nullable','regex:/^(https?:\/\/)([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/i'],
             'capacity',
             'description'
         ]);

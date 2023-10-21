@@ -41,10 +41,15 @@ Route::get('/search',function(Request $request) {
 });
 Route::get('/registration',[\App\Http\Controllers\UserController::class, 'registration_show'])->name('registration_show');
 Route::post('/registration',[\App\Http\Controllers\UserController::class, 'registration'])->name('registration');
-Route::get('/login',[\App\Http\Controllers\UserController::class, 'login_show'])->name('login_show');
-Route::post('/login',[\App\Http\Controllers\UserController::class, 'login'])->name('login');
+//Route::get('/login',[\App\Http\Controllers\UserController::class, 'login_show'])->name('login_show');
+
 Route::get('/events/create',[\App\Http\Controllers\EventController::class, 'create'])->name('eventsCreation');
-Route::post('/events',[\App\Http\Controllers\EventController::class, 'add']);
+Route::post('/events/add',[\App\Http\Controllers\EventController::class, 'add'])->name('add_event');
+Route::post('/events',[\App\Http\Controllers\UserController::class, 'login'])->name('login');
 Route::get('/events/{event}', [\App\Http\Controllers\EventController::class, 'show']);
 Route::get('/logout', [\App\Http\Controllers\UserController::class, 'logout'])->name('logout');
+Route::get('/edit_user', [\App\Http\Controllers\UserController::class, 'edit_show'])->name('edit_show');
+Route::get('/edit_password', [\App\Http\Controllers\UserController::class, 'edit_password_show'])->name('edit_password_show');
+Route::post('/edit_user',[\App\Http\Controllers\UserController::class, 'edit'])->name('edit_user');
+Route::post('/edit_password',[\App\Http\Controllers\UserController::class, 'edit_password'])->name('edit_password');
 
