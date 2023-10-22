@@ -109,7 +109,7 @@ class UserController extends Controller
     // Logout User
     public function logout() {
         auth()->logout();
-        return redirect('/events')->with('message', 'You have been logged out!');
+        return redirect('/')->with('message', 'You have been logged out!');
 
     }
 }

@@ -28,7 +28,6 @@
             },
         }
     </script>
-    <title>Akce | Akce a události</title>
 </head>
 <body>
     <nav class="bg-white border-gray-200 dark:bg-gray-900">
