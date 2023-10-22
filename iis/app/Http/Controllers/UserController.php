@@ -15,18 +15,6 @@ class UserController extends Controller
         return view('user.login');
     }*/
 
-    public function registration_show(){
-        return view('user.registration');
-    }
-
-    public function edit_show(){
-        return view('user.edit')->with('user',Auth::user());
-    }
-
-    public function edit_password_show(){
-        return view('user.password');
-    }
-
     public function login(Request $request){
 
         $formFields = $request->validate([
@@ -104,7 +92,7 @@ class UserController extends Controller
             // Login
             auth()->login($user);
 
-            return redirect('/events')->with('message', 'User created and logged in');
+            return redirect('/')->with('message', 'User created and logged in');
     }
     // Logout User
     public function logout() {

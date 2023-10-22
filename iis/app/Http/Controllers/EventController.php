@@ -15,7 +15,10 @@ class EventController extends Controller
     }
 
     //show single
-    public function show(Event $event){
+    public function show(Event $id){
+        $event = new Event();
+        $event->load_by_id($id);
+        dd($event);
         return view('events.event', [
             'event' => $event
         ]);

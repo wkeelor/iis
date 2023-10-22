@@ -11,6 +11,7 @@ class Event extends Model
     protected $fillable = ['name','description','host_id','category_id','venue_id','start_time','end_time','capacity'];
 
     // Define the relationship to the host (User)
+
     public function host()
     {
         return $this->belongsTo(User::class, 'host_id');
@@ -24,6 +25,10 @@ class Event extends Model
     public function venue()
     {
         return $this->belongsTo(Venue::class, 'venue_id');
+    }
+
+    public function load_by_id($id){
+        return self::find($id);
     }
 
 }
