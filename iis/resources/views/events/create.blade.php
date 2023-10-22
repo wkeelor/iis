@@ -28,7 +28,7 @@
                 <span class="sr-only">Close modal</span>
             </button>
             <div class="px-6 py-6 lg:px-8">
-                <form name="eventForm" action="{{route('add_event')}}" method="POST" onsubmit="return validateForm()">
+                <form name="eventForm" action="{{route('add_event')}}" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
                     @csrf
                     <div class="mb-6">
                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Názov podujatia</label>
@@ -54,23 +54,13 @@
                         <label for="end_time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Koniec podujatia</label>
                         <input type="datetime-local" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="end_time"/>
                     </div>
-
-
-                    {{--
-
-                            <div class="mb-6">
-                                <label for="venue_id" class="inline-block text-lg mb-2">Miesto</label>
-                                <select class="border border-gray-200 rounded p-2 w-full" name="venue_id">
-                                    <option value=""></option>
-                                    <option value="2">Miesto 2</option>
-                                    <!-- Add more options as needed -->
-                                </select>
-                            </div>
-                    --}}
-
                     <div class="mb-6">
                         <label for="capacity" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kapacita</label>
                         <input type="number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="capacity" min="1" step="1"/>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="logo">Logo</label>
+                        <input name="logo" class="block w-full mb-5 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="logo" type="file">
                     </div>
                     <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Odoslať</button>
                 </form>

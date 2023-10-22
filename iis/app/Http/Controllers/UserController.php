@@ -80,7 +80,8 @@ class UserController extends Controller
                 'login' => ['required', 'min:3', Rule::unique('users', 'login')],
                 'email' => ['required', 'email', Rule::unique('users', 'email')],
                 'password' => 'required|confirmed|min:6',
-                'birthdate'
+                'birthdate',
+                'role_id'
             ]);
 
             // Hash Password

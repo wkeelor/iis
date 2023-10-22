@@ -38,7 +38,7 @@ Route::post('/registration',[\App\Http\Controllers\UserController::class, 'regis
 //Route::get('/events/create',[\App\Http\Controllers\EventController::class, 'create'])->name('eventsCreation');
 Route::post('/events/add',[\App\Http\Controllers\EventController::class, 'add'])->name('add_event');
 Route::post('/',[\App\Http\Controllers\UserController::class, 'login'])->name('login');
-Route::get('/events/{event}', [\App\Http\Controllers\EventController::class, 'show']);
+Route::get('/events/{event}', [\App\Http\Controllers\EventController::class, 'show'])-> name('event_detail');
 Route::get('/logout', [\App\Http\Controllers\UserController::class, 'logout'])->name('logout');
 //Route::get('/edit_user', [\App\Http\Controllers\UserController::class, 'edit_show'])->name('edit_show');
 //Route::get('/edit_password', [\App\Http\Controllers\UserController::class, 'edit_password_show'])->name('edit_password_show');

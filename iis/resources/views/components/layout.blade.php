@@ -2,7 +2,7 @@
 @include('components.flash-error')
     <!DOCTYPE html>
 <html lang="sk">
-
+@php($user = Auth::user())
 <head>
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -37,16 +37,18 @@
                 <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Akcie a udalosti</span>
             </a>
             <div class="flex items-center md:order-2 pr-3">
-                @if(Auth::user())
+                @if($user)
                     <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                        @if($user->role_id == 3)
                         <li class="flex items-center">
                             <a href="#" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Užívatelia</a>
                         </li>
+                        @endif
                         <li class="flex items-center">
                             <a href="#" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Akcie</a>
                         </li>
                         <li class="flex items-center">
-                            <a href="{{ route('basket',['user' => Auth::user()->id]) }}" class="flex items-center justify-center hover:bg-gray-100 md:hover:bg-transparent md:p-0 dark:hover:bg-gray-700 md:dark:hover:bg-transparent dark:border-gray-700 p-2" style="color: white;">
+                            <a href="{{ route('basket',['user' => $user->id]) }}" class="flex items-center justify-center hover:bg-gray-100 md:hover:bg-transparent md:p-0 dark:hover:bg-gray-700 md:dark:hover:bg-transparent dark:border-gray-700 p-2" style="color: white;">
                                 <i class="fa-solid fa-basket-shopping fa-xl hover:text-blue-700 dark:hover:text-blue-500 flex items-center justify-center"></i>
                             </a>
                         </li>
@@ -58,8 +60,8 @@
                             <!-- Dropdown menu -->
                             <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
                                 <div class="px-4 py-3">
-                                    <span class="block text-sm text-gray-900 dark:text-white">{{Auth::user()->name}}</span>
-                                    <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">{{Auth::user()->email}}</span>
+                                    <span class="block text-sm text-gray-900 dark:text-white">{{$user->name}}</span>
+                                    <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">{{$user->email}}</span>
                                 </div>
                                 <ul class="py-4" aria-labelledby="user-menu-button">
                                     <li>

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Event extends Model
 {
     use HasFactory;
-    protected $fillable = ['name','description','host_id','category_id','venue_id','start_time','end_time','capacity'];
+    protected $fillable = ['name','description','host_id','category_id','venue_id','start_time','end_time','capacity','logo'];
 
     // Define the relationship to the host (User)
 
