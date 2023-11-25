@@ -15,6 +15,12 @@ class UserController extends Controller
         return view('user.login');
     }*/
 
+    public function index(){
+        return view('user.users',[
+            'users' => User::all()
+        ]);
+    }
+
     public function login(Request $request){
 
         $formFields = $request->validate([
@@ -62,6 +68,19 @@ class UserController extends Controller
 
         $request->validate([
             'current-password' => 'required',
+            'new-password' => 'required|string|min:8|confirmed',
+        ]);
+
+        //Change Password
+        $user = Auth::user();
+        $user->password = bcrypt($request->get('new_password'));
+        $user->save();
+
+        return redirect()->back()->with("success","Password successfully changed!");
+    }
+
+    public function edit_password_admin(Request $request) {
+        $request->validate([
             'new-password' => 'required|string|min:8|confirmed',
         ]);
 

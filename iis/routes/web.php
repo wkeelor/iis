@@ -39,9 +39,12 @@ Route::post('/registration',[\App\Http\Controllers\UserController::class, 'regis
 Route::post('/events/add',[\App\Http\Controllers\EventController::class, 'add'])->name('add_event');
 Route::post('/',[\App\Http\Controllers\UserController::class, 'login'])->name('login');
 Route::get('/events/{event}', [\App\Http\Controllers\EventController::class, 'show'])-> name('event_detail');
+Route::post('/edit_event',[\App\Http\Controllers\EventController::class, 'edit'])->name('edit_event');
 Route::get('/logout', [\App\Http\Controllers\UserController::class, 'logout'])->name('logout');
 //Route::get('/edit_user', [\App\Http\Controllers\UserController::class, 'edit_show'])->name('edit_show');
 //Route::get('/edit_password', [\App\Http\Controllers\UserController::class, 'edit_password_show'])->name('edit_password_show');
 Route::post('/edit_user',[\App\Http\Controllers\UserController::class, 'edit'])->name('edit_user');
 Route::post('/edit_password',[\App\Http\Controllers\UserController::class, 'edit_password'])->name('edit_password');
+Route::post('/edit_password_admin',[\App\Http\Controllers\UserController::class, 'edit_password_admin'])->name('edit_password_admin');
+Route::get('/users',[\App\Http\Controllers\UserController::class, 'index'])->name('all_users');
 

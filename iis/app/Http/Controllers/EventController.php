@@ -21,6 +21,28 @@ class EventController extends Controller
             'event' => $event
         ]);
     }
+
+    public function edit(Request $request){
+        // Edit Event
+        $event =new Event();
+        $event = $event->load_by_id($request->id);
+        $request->validate([
+            'name' => 'required',
+            'start_time' => 'required',
+            'end_time' => 'required',
+            'website' => ['nullable','regex:/^(https?:\/\/)([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/i'],
+            'capacity' => [],
+            'description' => []
+        ]);
+        $event->name = $request['name'];
+        $event->start_time = $request['start_time'];
+        $event->end_time = $request['end_time'];
+        $event->website = $request['website'];
+        $event->capacity = $request['capacity'];
+        $event->description = $request['description'];
+        $event->save();
+        return redirect()->back()->with('message','Event Updated');
+    }
     public function storeLogo(Request $request,Event $event)
     {
         $image = $request->file('logo');
