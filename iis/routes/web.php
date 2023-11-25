@@ -45,3 +45,8 @@ Route::get('/logout', [\App\Http\Controllers\UserController::class, 'logout'])->
 Route::post('/edit_user',[\App\Http\Controllers\UserController::class, 'edit'])->name('edit_user');
 Route::post('/edit_password',[\App\Http\Controllers\UserController::class, 'edit_password'])->name('edit_password');
 
+//Route::post('/events/{event}/rate', )
+//Route::post('/add-rating', 'RatingsController@addRating');
+//Route::post('review-event', 'RatingsController@addRating')->name('review.event');
+//Route::post('/event/submit', [EventController::class, 'submit'])->name('event.submit');
+Route::post('/ratings', [\App\Http\Controllers\RatingController::class, 'store'])->name('ratings.store');

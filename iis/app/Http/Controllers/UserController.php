@@ -99,6 +99,5 @@ class UserController extends Controller
     public function logout() {
         auth()->logout();
         return redirect('/')->with('message', 'You have been logged out!');
-
     }
 }

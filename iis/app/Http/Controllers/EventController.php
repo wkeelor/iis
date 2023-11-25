@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use Illuminate\Http\Request;
+use App\Models\Rating;
 
 class EventController extends Controller
 {
@@ -17,8 +18,10 @@ class EventController extends Controller
     //show single
     public function show(Event $event){
         //dd($event);
+        $averageRating = $event->ratings()->avg('rating');
         return view('events.event', [
-            'event' => $event
+            'event' => $event,
+            'averageRating' => $averageRating
         ]);
     }
     public function storeLogo(Request $request,Event $event)
@@ -56,6 +59,4 @@ class EventController extends Controller
         }
         return redirect('/');
     }
-
-
 }

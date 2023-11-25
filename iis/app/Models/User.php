@@ -54,8 +54,12 @@ class User extends Authenticatable
         return self::find($id);
     }
 
-
     public function loginUser(Request $user_data){
 
+    }
+
+    //get user ratings
+    public function ratings() {
+        return $this->hasMany(Rating::class);
     }
 }

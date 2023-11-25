@@ -31,4 +31,9 @@ class Event extends Model
         return self::find($id);
     }
 
+    //get event ratings
+    public function ratings() {
+        return $this->hasMany(Rating::class);
+    }
+
 }
