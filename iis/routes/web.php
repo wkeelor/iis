@@ -72,3 +72,4 @@ Route::get('/venues/approve/{venue}',[\App\Http\Controllers\VenueController::cla
 Route::get('/venues/decline/{venue}',[\App\Http\Controllers\VenueController::class, 'decline'])->name('venue_decline');
 Route::get('/venues/moderate',[\App\Http\Controllers\VenueController::class, 'show_moderator'])->name('venues_moderate');
 Route::get('/venues',[\App\Http\Controllers\VenueController::class, 'index'])->name('all_venues');
+Route::post('/ratings', [\App\Http\Controllers\RatingController::class, 'store'])->name('ratings.store');

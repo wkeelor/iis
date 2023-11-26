@@ -10,7 +10,7 @@ class EventController extends Controller
 {
     //show all
     public function index(){
-        $events =  Event::where('approved', true)->map(function ($event) {
+        $events =  Event::where('approved', true)->get()->map(function ($event) {
             $averageRating = $event->ratings()->avg('rating'); // Assuming 'rating' is the column name in your ratings table
             $event->averageRating = $averageRating; // Add averageRating as a custom attribute
             return $event;
@@ -21,7 +21,7 @@ class EventController extends Controller
     }
 
     public function all_my(){
-        $events =  Event::where('host_id', Auth::user()->id)->map(function ($event) {
+        $events =  Event::where('host_id', Auth::user()->id)->get()->map(function ($event) {
             $averageRating = $event->ratings()->avg('rating'); // Assuming 'rating' is the column name in your ratings table
             $event->averageRating = $averageRating; // Add averageRating as a custom attribute
             return $event;
