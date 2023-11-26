@@ -30,5 +30,13 @@ class Event extends Model
     public function load_by_id($id){
         return self::find($id);
     }
+    //get event ratings
+    public function ratings() {
+        return $this->hasMany(Rating::class);
+    }
+    
+    public function averageRating() {
+        return $this->ratings()->avg('rating');
+    }
 
 }

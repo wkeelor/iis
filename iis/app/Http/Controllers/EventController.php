@@ -9,16 +9,25 @@ class EventController extends Controller
 {
     //show all
     public function index(){
+        $events = Event::all()->map(function ($event) {
+            $averageRating = $event->ratings()->avg('rating'); // Assuming 'rating' is the column name in your ratings table
+            $event->averageRating = $averageRating; // Add averageRating as a custom attribute
+            return $event;
+        });
+
         return view('events.events',[
-            'events' => Event::all()
+            //'events' => Event::all()
+            'events' => $events
         ]);
     }
 
     //show single
     public function show(Event $event){
-        //dd($event);
+        $averageRating = $event->ratings()->avg('rating'); 
+        $event->averageRating = $averageRating;
         return view('events.event', [
-            'event' => $event
+            'event' => $event,
+            'averageRating' => $averageRating
         ]);
     }
 
