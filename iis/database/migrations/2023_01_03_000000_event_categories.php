@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id('id');
             //Foreign keys
-            $table->unsignedBigInteger('parent_id');
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->foreign('parent_id')->references('id')->on('categories')->onDelete('cascade');
             //Other atributes
             $table->string('name');
+            $table->boolean('approved')->nullable();
+            $table->timestamps();
         });
     }
 

@@ -27,8 +27,4 @@ class Event extends Model
         return $this->belongsTo(Venue::class, 'venue_id');
     }
 
-    public function load_by_id($id){
-        return self::find($id);
-    }
-
 }

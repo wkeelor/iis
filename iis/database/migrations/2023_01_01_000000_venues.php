@@ -15,12 +15,14 @@ return new class extends Migration
             $table->id('id');
             //Other atributes
             $table->string('name');
-            $table->string('description');
-            $table->string('street');
-            $table->string('street_number');
-            $table->string('zip_code');
-            $table->string('province');
-            $table->string('country');
+            $table->string('description')->nullable();
+            $table->string('logo') -> nullable();
+            $table->string('street')->nullable();
+            $table->string('street_number')->nullable();
+            $table->string('zip_code')->nullable();
+            $table->string('province')->nullable();
+            $table->string('country')->nullable();
+            $table->boolean('approved')->nullable();
             $table->timestamps();
         });
     }

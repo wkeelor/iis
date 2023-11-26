@@ -31,6 +31,8 @@ return new class extends Migration
             $table->dateTime('end_time');
             $table->integer('capacity')->nullable();
             $table->string('description')->nullable();
+            $table->boolean('approved')->nullable();
+            $table->boolean('requested_approval')->nullable();
             $table->timestamps();
         });
     }

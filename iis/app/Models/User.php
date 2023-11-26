@@ -51,9 +51,6 @@ class User extends Authenticatable
         return $this->hasMany(Event::class, 'host_id');
     }
 
-    public function load_by_id($id){
-        return self::find($id);
-    }
 
 
     public function loginUser(Request $user_data){

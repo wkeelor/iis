@@ -54,7 +54,6 @@
                 </thead>
                 <tbody>
                 @foreach($users as $user)
-
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {{$user->name}}
@@ -76,14 +75,23 @@
                         </td>
                         <td class="px-6 py-4 text-right">
                             <div class="flex space-x-4">
-                                <button data-modal-target="password-admin-modal" data-modal-toggle="password-admin-modal" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                <a href="{{ route('edit_password_show', ['user' => $user]) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                     <i class="fa-solid fa-key hover:text-blue-700 dark:hover:text-blue-500"></i>
-                                    <span>Zmeniť heslo</span>
-                                </button>
-                                <button data-modal-target="role-modal" data-modal-toggle="role-modal" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                                    <i class="fa-solid fa-key hover:text-blue-700 dark:hover:text-blue-500"></i>
-                                    <span>Zmeniť rolu</span>
-                                </button>
+                                </a>
+
+                                <a href="{{ route('edit_role_show', ['user' => $user]) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                    <i class="fa-solid fa-user-pen hover:text-blue-700 dark:hover:text-blue-500"></i>
+                                </a>
+
+                                @if(!$user->deleted_at)
+                                <a href="{{ route('user_soft_delete', ['user' => $user]) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                    <i class="fa-solid fa-trash hover:text-blue-700 dark:hover:text-blue-500"></i>
+                                </a>
+                                @else
+                                <a href="{{ route('user_restore', ['user' => $user]) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                    <i class="fa-solid fa-rotate-right hover:text-blue-700 dark:hover:text-blue-500"></i>
+                                </a>
+                                @endif
                             </div>
                         </td>
                         {{--<button data-modal-target="edit-modal" data-modal-toggle="edit-modal"  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">

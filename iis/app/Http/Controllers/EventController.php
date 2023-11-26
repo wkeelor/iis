@@ -4,28 +4,82 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 class EventController extends Controller
 {
     //show all
     public function index(){
+        $events =  Event::where('approved', true)->get();
         return view('events.events',[
-            'events' => Event::all()
+            'events' => $events
+        ]);
+    }
+
+    public function all_my(){
+        $events =  Event::where('host_id', Auth::user()->id)->get();
+        return view('events.events',[
+            'events' => $events
+        ]);
+    }
+
+    public function request(Event $event){
+        $event->requested_approval = true;
+        $event->save();
+        return redirect()->back()->with('message','Request sent');
+    }
+
+    public function show_moderator(){
+        $declined =  Event::where('approved', false)->get();
+        $awaiting =  Event::where('approved', null)->where('requested_approval',true)->get();
+        $approved =  Event::where('approved', true)->get();
+
+        // Eager load the 'category' relationship
+        $jsons = [$approved, $awaiting, $declined];
+        Event::whereIn('id', collect($jsons)->flatten()->pluck('id'))->with('category')->get();
+
+        return view('events.moderator_events', [
+            'jsons' => $jsons,
         ]);
     }
 
     //show single
-    public function show(Event $event){
+    public function show(int $eventId){
         //dd($event);
+        $event = Event::with('venue')->find($eventId);
+
+        if (!$event) {
+            // Handle the case where the event is not found, for example, redirect to an error page
+            return redirect()->back();
+        }
         return view('events.event', [
             'event' => $event
         ]);
     }
 
+    public function edit_show(Event $event){
+        //dd($event);
+        return view('events.edit', [
+            'event' => $event
+        ]);
+    }
+
+    public function approve(Event $event){
+        $event->approved = true;
+        $event->save();
+        return redirect()->back();
+    }
+
+    public function decline(Event $event){
+        $event->approved = false;
+        $event->save();
+        return redirect()->back();
+    }
+
     public function edit(Request $request){
         // Edit Event
         $event =new Event();
-        $event = $event->load_by_id($request->id);
+        $event = Event::find($request->id);
         $request->validate([
             'name' => 'required',
             'start_time' => 'required',
@@ -41,7 +95,7 @@ class EventController extends Controller
         $event->capacity = $request['capacity'];
         $event->description = $request['description'];
         $event->save();
-        return redirect()->back()->with('message','Event Updated');
+        return redirect('/')->with('message','Event Updated');
     }
     public function storeLogo(Request $request,Event $event)
     {
@@ -68,15 +122,15 @@ class EventController extends Controller
             'capacity' => [],
             'description' => []
         ]);
-
+        dd($form_fields);
         $event = Event::create($form_fields);
         $event->venue_id = 1;
-        $event->host_id = 1;
+        $event-> Auth::user()->id;
         $event->save();
         if($request->logo){
             $this->storeLogo($request,$event);
         }
-        return redirect('/');
+        return redirect()->back();
     }
 
 

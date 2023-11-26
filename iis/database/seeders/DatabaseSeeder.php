@@ -50,6 +50,22 @@ class DatabaseSeeder extends Seeder
                 'role_id' => 3
         ]);
 
+        \App\Models\Category::create([
+            'name' => 'Entertainment'
+        ]);
+
+        \App\Models\Category::create([
+            'name' => 'Music',
+            'parent_id' => 1,
+            'approved' => true
+        ]);
+
+        \App\Models\Category::create([
+            'name' => 'Movies',
+            'parent_id' => 1,
+            'approved' => false
+        ]);
+
         \App\Models\Venue::create([
                 'name' => 'Venue 1',
                 'description' => 'description of venue 1',
@@ -87,7 +103,9 @@ class DatabaseSeeder extends Seeder
                 'start_time' => '2023-10-20 15:30:00',
                 'end_time' => '2023-10-21 15:30:00',
                 'website' => 'https://www.google.com',
-                'venue_id' => 1
+                'venue_id' => 1,
+                'requested_approval' => true,
+                'approved' => true
         ]);
         \App\Models\Event::create([
                 'host_id' => 2,
@@ -98,7 +116,9 @@ class DatabaseSeeder extends Seeder
                 'start_time' => '2023-10-20 15:30:00',
                 'end_time' => '2023-10-21 15:30:00',
                 'website' => 'https://www.google.com',
-                'venue_id' => 2
+                'venue_id' => 2,
+                'requested_approval' => true,
+                'approved' => true
         ]);
         \App\Models\Event::create([
                 'host_id' => 3,

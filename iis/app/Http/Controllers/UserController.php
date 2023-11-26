@@ -37,8 +37,8 @@ class UserController extends Controller
     }
     public function edit(Request $request){
         // Edit User
-        $user =new User();
-        $user = $user->load_by_id($request->id);
+        $user = new User();
+        $user = User::find($request->id);
         if (!(Hash::check($request->get('current_password'), $user->password))) {
             // The passwords matches
             return redirect()->back()->with("error","Nepodarilo sa upraviť vaše údaje z dôvodu zle zadaného hesla.");
@@ -81,15 +81,26 @@ class UserController extends Controller
 
     public function edit_password_admin(Request $request) {
         $request->validate([
-            'new-password' => 'required|string|min:8|confirmed',
+            'new_password' => 'required|string|min:8',
         ]);
 
         //Change Password
-        $user = Auth::user();
+        $user = User::find($request->id);
         $user->password = bcrypt($request->get('new_password'));
         $user->save();
 
-        return redirect()->back()->with("success","Password successfully changed!");
+        return redirect('/users');
+    }
+
+    public function edit_role_admin(Request $request) {
+        $request->validate([
+            'role_id' => 'required',
+        ]);
+        $user = User::find($request->id);
+        $user->role_id = $request->get('role_id');
+        $user->save();
+
+        return redirect('/users');
     }
 
     public function registration(Request $request){
@@ -119,5 +130,45 @@ class UserController extends Controller
         auth()->logout();
         return redirect('/')->with('message', 'You have been logged out!');
 
+    }
+
+    public function user_soft_delete(User $user) {
+        $user_changed = User::find($user->id);
+        // Set a default value for the 'name' field if it's not already set
+        if ($user_changed ){
+            if(!$user_changed->name){
+                $user_changed->name = "";
+            }
+            $user_changed->deleted_at = date("Y-m-d H:i:s");;
+            $user_changed->save();
+        }
+        return redirect()->back()->with("success","User successfully deleted!");
+    }
+
+    public function user_restore(User $user) {
+        $user_changed = User::find($user->id);
+        // Set a default value for the 'name' field if it's not already set
+        if ($user_changed ){
+            if(!$user_changed->name){
+                $user_changed->name = "";
+            }
+            $user_changed->deleted_at = null;
+            $user_changed->save();
+        }
+
+        return redirect()->back()->with("success","User successfully restored!");
+
+    }
+
+    public function edit_password_show(User $user){
+        return view('user.admin_password',[
+            'user' => $user
+        ]);
+    }
+
+    public function edit_role_show(User $user){
+        return view('user.admin_role',[
+            'user' => $user
+        ]);
     }
 }
