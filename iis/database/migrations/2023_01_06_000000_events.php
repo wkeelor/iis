@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('host_id')->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
             $table->unsignedBigInteger('venue_id')->nullable();
+            $table->unsignedBigInteger('price_category_id')->nullable();
 
             //$table->foreign('host_id')->references('id')->on('users')->onDelete('cascade');
             //$table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
