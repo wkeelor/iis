@@ -13,8 +13,7 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <script src="//unpkg.com/alpinejs" defer></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/datepicker.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" />
     <script>import Datepicker from 'flowbite-datepicker/Datepicker';
         import DateRangePicker from 'flowbite-datepicker/DateRangePicker';</script>
     <script>
@@ -28,12 +27,16 @@
             },
         }
     </script>
+    <script>document.documentElement.classList.add('dark')</script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js" defer></script>
 </head>
 <body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/datepicker.min.js"></script>
 <nav class="bg-white border-gray-200 dark:bg-gray-900">
     <div class="max-w-screen flex flex-wrap items-center justify-between  p-4">
-        <a href="https://flowbite.com/" class="flex items-center">
+        <a href="/" class="flex items-center">
             <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 mr-3" alt="Flowbite Logo" />
             <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Akcie a udalosti</span>
         </a>

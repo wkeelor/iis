@@ -66,6 +66,19 @@ class DatabaseSeeder extends Seeder
             'approved' => false
         ]);
 
+        \App\Models\PriceCategory::create([
+            'name' => 'Zpoplatnené',
+
+        ]);
+        \App\Models\PriceCategory::create([
+            'name' => 'Dobrovolné',
+
+        ]);
+        \App\Models\PriceCategory::create([
+            'name' => 'Zdarma',
+
+        ]);
+
         \App\Models\Venue::create([
                 'name' => 'Venue 1',
                 'description' => 'description of venue 1',
@@ -104,6 +117,7 @@ class DatabaseSeeder extends Seeder
                 'end_time' => '2023-10-21 15:30:00',
                 'website' => 'https://www.google.com',
                 'venue_id' => 1,
+                'price_category_id' => 1,
                 'requested_approval' => true,
                 'approved' => true
         ]);
@@ -117,6 +131,7 @@ class DatabaseSeeder extends Seeder
                 'end_time' => '2023-10-21 15:30:00',
                 'website' => 'https://www.google.com',
                 'venue_id' => 2,
+                'price_category_id' => 1,
                 'requested_approval' => true,
                 'approved' => true
         ]);
@@ -129,7 +144,8 @@ class DatabaseSeeder extends Seeder
                 'start_time' => '2023-10-20 15:30:00',
                 'end_time' => '2023-10-21 15:30:00',
                 'website' => 'https://www.google.com',
-                'venue_id' => 3
+                'venue_id' => 3,
+                'price_category_id' => 1
         ]);
         \App\Models\Event::create([
                 'host_id' => 1,
@@ -140,7 +156,27 @@ class DatabaseSeeder extends Seeder
                 'start_time' => '2023-10-20 15:30:00',
                 'end_time' => '2023-10-21 15:30:00',
                 'website' => 'https://www.google.com',
-                'venue_id' => 2
+                'venue_id' => 2,
+                'price_category_id' => 1
+        ]);
+
+        \App\Models\PriceType::create([
+            'event_id' => 1,
+            'price' => 500,
+            'name' => 'Základní',
+            'default' => 1
+        ]);
+
+        \App\Models\PriceType::create([
+            'event_id' => 1,
+            'price' => 300,
+            'name' => 'Student',
+        ]);
+
+        \App\Models\PriceType::create([
+            'event_id' => 1,
+            'price' => 300,
+            'name' => 'Senior',
         ]);
     }
 }

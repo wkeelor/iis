@@ -47,11 +47,11 @@
         <div class="grid grid-cols-2 gap-4">
             <div>
                 <i class="fa-solid fa-calendar-days hover:text-blue-700 dark:hover:text-blue-500" style="color:white; padding-right: 0.5rem;"></i>
-                <span class="text-sm text-gray-700 dark:text-white" style="padding-right: 0.5rem;">{{$event->start_time}}</span>
+                <span class="text-sm text-gray-700 dark:text-white whitespace-nowrap" style="padding-right: 0.5rem;">{{$event->start_time}}</span>
             </div>
             <div>
 
-                <span class="text-sm text-gray-700 dark:text-white">{{$event->end_time}}</span>
+                <span class="text-sm text-gray-700 dark:text-white whitespace-nowrap">{{$event->end_time}}</span>
             </div>
             <div>
                 <i class="fa-solid fa-location-dot hover:text-blue-700 dark:hover:text-blue-500" style="color:white; padding-right: 0.5rem;"></i>
@@ -70,8 +70,3 @@
     </div>
 </div>
 
-<script>
-    function redirectToEventDetail(url) {
-        window.location.href = url;
-    }
-</script>

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Event extends Model
 {
     use HasFactory;
-    protected $fillable = ['name','description','host_id','category_id','venue_id','start_time','end_time','capacity','logo'];
+    protected $fillable = ['name','description','host_id','category_id','venue_id','price_category_id','start_time','end_time','capacity','logo'];
 
     // Define the relationship to the host (User)
 
@@ -29,6 +29,10 @@ class Event extends Model
     //get event ratings
     public function ratings() {
         return $this->hasMany(Rating::class);
+    }
+    public function price_category()
+    {
+        return $this->belongsTo(PriceCategory::class, 'price_category_id');
     }
 
     public function averageRating() {

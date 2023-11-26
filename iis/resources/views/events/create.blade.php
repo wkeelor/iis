@@ -15,7 +15,7 @@
         }
     </script>
 </head>
-<body>
+<body x-data="{ selectedOption: ''}">
 
 <div id="create-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative w-full max-w-md max-h-full">
@@ -28,7 +28,7 @@
                 <span class="sr-only">Close modal</span>
             </button>
             <div class="px-6 py-6 lg:px-8">
-                <form name="eventForm" action="{{route('add_event')}}" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+                <form name="eventForm" action="{{route('add_event')}}" method="POST" enctype="multipart/form-data" >
                     @csrf
                     <div class="mb-6">
                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Názov podujatia</label>
@@ -59,6 +59,19 @@
                         <input type="number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="capacity" min="1" step="1"/>
                     </div>
                     <div class="mb-6">
+                        <label for="price_category_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cenová ketogória</label>
+                        <select id="price_category_id" x-model="selectedOption" name="price_category_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value="" x-model="selectedOption">Zvolte moňosť</option>
+                            <option value="1">Zpoplatnená</option>
+                            <option value="2">Dobrovolné vstupné</option>
+                            <option value="3">Zdarma</option>
+                        </select>
+                  </div>
+                    <div class="mb-6" x-show="selectedOption === '1'">
+                        <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Základná cena</label>
+                        <input type="number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="price"/>
+                    </div>
+                    <div class="mb-6">
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="logo">Logo</label>
                         <input name="logo" class="block w-full mb-5 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="logo" type="file">
                     </div>
@@ -68,5 +81,24 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        Alpine.data('formValidation', () => ({
+            selectedOption: '',
+            price: '',
+            showError: false,
+
+            validateForm() {
+                if (this.selectedOption === '1' && !this.price) {
+                    this.showError = true;
+                } else {
+                    this.showError = false;
+                    // Submit the form or perform additional actions here
+                    console.log('Form submitted');
+                }
+            },
+        }));
+    });
+</script>
 </body>
 </html>

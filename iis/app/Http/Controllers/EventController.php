@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\PriceType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -55,9 +56,13 @@ class EventController extends Controller
     public function show(Event $event){
         $averageRating = $event->ratings()->avg('rating');
         $event->averageRating = $averageRating;
+        $priceTypes = DB::table('price_types')->select('*')->where([
+            ['event_id', $event->id]
+        ])->get();
         return view('events.event', [
             'event' => $event,
-            'averageRating' => $averageRating
+            'averageRating' => $averageRating,
+            'priceTypes' => $priceTypes
         ]);
     }
 
@@ -116,7 +121,6 @@ class EventController extends Controller
     }
 
     public function add(Request $request){
-        //dd($request->logo);
         $form_fields = $request->validate([
             'name' => 'required',
             'start_time' => 'required',
@@ -124,12 +128,35 @@ class EventController extends Controller
             //'venue_id' => 'required',
             'website' => ['nullable','regex:/^(https?:\/\/)([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/i'],
             'capacity' => [],
-            'description' => []
+            'description' => [],
+            'price_category_id' => 'required'
         ]);
         $event = Event::create($form_fields);
         $event->venue_id = 1;
         $event-> Auth::user()->id;
+        $event->host_id = 1;
+        $priceTypeForm = [
+            'event_id' => $event->id,
+            'default' => 1
+        ];
+        switch ($event->price_category_id){
+            case 2:
+                $priceTypeForm['name'] = "Dobrovolné";
+                $priceTypeForm['price'] = 0;
+                break;
+            case 3:
+                $priceTypeForm['name'] = "Dobrovolné";
+
+                break;
+            default:
+                $priceTypeForm['name'] = "Základné";
+                $priceTypeForm['price'] = $request->price;
+                break;
+        }
+
+        $priceType = PriceType::create($priceTypeForm);
         $event->save();
+        $priceType->save();
         if($request->logo){
             $this->storeLogo($request,$event);
         }

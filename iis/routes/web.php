@@ -22,13 +22,8 @@ Route::get('/',[\App\Http\Controllers\EventController::class, 'index'])->name('a
 Route::get('/my/events',[\App\Http\Controllers\EventController::class, 'all_my'])->name('all_my_events');
 
 
-
-Route::get('/basket/{user}', function($user){
-    //dd($user_id);
-    return response('This will be basket of user with id ' . $user);
-})->name('basket');
-
-
+Route::post('/order/add', [\App\Http\Controllers\OrderController::class, 'add'])-> name('basket_add');
+Route::get('/order/{user}', [\App\Http\Controllers\OrderController::class, 'show'])-> name('basket');
 
 Route::get('/profile/{user}', function($user){
     //dd($user_id);

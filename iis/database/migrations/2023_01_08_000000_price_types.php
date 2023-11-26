@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('price_type', function (Blueprint $table) {
+        Schema::create('price_types', function (Blueprint $table) {
             $table->id('id');
             $table->unsignedBigInteger('event_id');
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
-            $table->integer('price');
+            $table->integer('price')->nullable();
             $table->string('name');
+            $table->integer('default')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        schema::dropIfExists('price_type');
+        schema::dropIfExists('price_types');
     }
 };
