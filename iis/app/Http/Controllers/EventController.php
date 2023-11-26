@@ -10,14 +10,22 @@ class EventController extends Controller
 {
     //show all
     public function index(){
-        $events =  Event::where('approved', true)->get();
+        $events =  Event::where('approved', true)->map(function ($event) {
+            $averageRating = $event->ratings()->avg('rating'); // Assuming 'rating' is the column name in your ratings table
+            $event->averageRating = $averageRating; // Add averageRating as a custom attribute
+            return $event;
+        });
         return view('events.events',[
             'events' => $events
         ]);
     }
 
     public function all_my(){
-        $events =  Event::where('host_id', Auth::user()->id)->get();
+        $events =  Event::where('host_id', Auth::user()->id)->map(function ($event) {
+            $averageRating = $event->ratings()->avg('rating'); // Assuming 'rating' is the column name in your ratings table
+            $event->averageRating = $averageRating; // Add averageRating as a custom attribute
+            return $event;
+        });
         return view('events.events',[
             'events' => $events
         ]);
@@ -44,16 +52,12 @@ class EventController extends Controller
     }
 
     //show single
-    public function show(int $eventId){
-        //dd($event);
-        $event = Event::with('venue')->find($eventId);
-
-        if (!$event) {
-            // Handle the case where the event is not found, for example, redirect to an error page
-            return redirect()->back();
-        }
+    public function show(Event $event){
+        $averageRating = $event->ratings()->avg('rating');
+        $event->averageRating = $averageRating;
         return view('events.event', [
-            'event' => $event
+            'event' => $event,
+            'averageRating' => $averageRating
         ]);
     }
 
@@ -122,7 +126,6 @@ class EventController extends Controller
             'capacity' => [],
             'description' => []
         ]);
-        dd($form_fields);
         $event = Event::create($form_fields);
         $event->venue_id = 1;
         $event-> Auth::user()->id;

@@ -39,7 +39,7 @@ Route::post('/registration',[\App\Http\Controllers\UserController::class, 'regis
 Route::post('/events/add',[\App\Http\Controllers\EventController::class, 'add'])->name('add_event');
 Route::get('/events/moderate',[\App\Http\Controllers\EventController::class, 'show_moderator'])->name('event_moderate');
 Route::post('/',[\App\Http\Controllers\UserController::class, 'login'])->name('login');
-Route::get('/events/{event}', [\App\Http\Controllers\EventController::class, 'show'])-> name('event_detail');
+Route::get('/events/{event}', [\App\Http\Controllers\EventController::class, 'show'])->name('event_detail');
 Route::post('/edit_event',[\App\Http\Controllers\EventController::class, 'edit'])->name('edit_event');
 Route::get('/edit_event/{event}',[\App\Http\Controllers\EventController::class, 'edit_show'])->name('edit_event_show');
 Route::get('/logout', [\App\Http\Controllers\UserController::class, 'logout'])->name('logout');

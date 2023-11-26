@@ -1,4 +1,5 @@
 @php($user = Auth::user())
+@props(['event', 'averageRating'])
 <div class="bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
     @if(str_contains(Request::url(), "event") === false)
         <a href=" {{route('event_detail', ['event' => $event])}}">
@@ -58,7 +59,6 @@
             </div>
         </div>
         <div class="grid grid-cols-2 gap-4">
-
             <div>
                 <i class="fa-solid fa-calendar-days hover:text-blue-700 dark:hover:text-blue-500" style="color:white; padding-right: 0.5rem;"></i>
                 <span class="text-sm text-gray-700 dark:text-white" style="padding-right: 0.5rem;">{{$event->start_time}}</span>
@@ -77,6 +77,15 @@
                 @php($shortenedWebsite = isset($parsedUrl['host']) ? $parsedUrl['host'] : $event->website)
                 <a href="{{ $event->website }}" class="text-sm text-gray-700 dark:text-white" target="_blank" rel="noopener noreferrer">{{$shortenedWebsite}}</a>
             </div>
+            <div>
+            </div>
+            <div>
+                @include('components.ratings') <!-- Rating button for popup from and stars -->
+            </div>
+        </div>
+        <div class="flex items-center">
+        @include('components.average_rating')
+        <p class="text-sm text-gray-700 dark:text-white" style="padding-top: 0.3rem; padding-right: 0.5rem; padding-left: 3.6rem;"> Rating: {{ number_format($event->averageRating,2) }} out of 5 </p>
         </div>
     </div>
 </div>

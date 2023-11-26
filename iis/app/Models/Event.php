@@ -26,5 +26,13 @@ class Event extends Model
     {
         return $this->belongsTo(Venue::class, 'venue_id');
     }
+    //get event ratings
+    public function ratings() {
+        return $this->hasMany(Rating::class);
+    }
+
+    public function averageRating() {
+        return $this->ratings()->avg('rating');
+    }
 
 }
