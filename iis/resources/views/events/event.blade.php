@@ -2,7 +2,6 @@
 <x-layout>
     <section class="py-12 sm:py-16" x-data="get_items()">
         <div class="container mx-auto px-4">
-
             <div class="lg:col-gap-12 xl:col-gap-16 mt-8 grid grid-cols-1 gap-12 lg:mt-12 lg:grid-cols-5 lg:gap-16">
                 <div class="lg:col-span-3 lg:row-end-1">
                     <div class="lg:flex lg:items-start">
@@ -14,53 +13,57 @@
                     </div>
                 </div>
 
-                <div class="lg:col-span-2 lg:row-span-2 lg:row-end-2">
-                    <h1 class="sm: text-2xl font-bold text-gray-900 sm:text-3xl">{{$event->name}}</h1>
+                <div class="lg:col-span-2 lg:row-span-2 lg:row-end-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 p-10 "> <!--bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-200 dark:border-gray-300 p-10 -->
+                    
+                    <!--<div class="lg:col-span-2 lg:row-span-2 lg:row-end-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-100 dark:border-gray-100 p-10">
+                    </div>-->
+                        <h1 class="sm: text-2xl font-bold text-slate-100 sm:text-3xl">{{$event->name}}</h1>
 
-                    <div class="mt-5 flex items-center">
-                        <div class="flex items-center">
-                            @php($averageRating = $event->averageRating)
-                            @include('reviews.average_rating')
-                            <span
-                                class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">{{ number_format($event->averageRating,2) }}</span>
+                        <div class="mt-5 flex items-center">
+                            <div class="flex items-center">
+                                @php($averageRating = $event->averageRating)
+                                @include('reviews.average_rating')
+                                <span
+                                    class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">{{ number_format($event->averageRating,2) }}</span>
+                            </div>
+                            <p class="ml-2 text-sm font-medium text-gray-500">{{$countRating.' Reviews'}}</p>
                         </div>
-                        <p class="ml-2 text-sm font-medium text-gray-500">{{$countRating.' Reviews'}}</p>
-                    </div>
+
                     <form action="{{route('basket_add')}}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <h2 class="mt-8 text-base text-gray-900 pb-3">Kategória</h2>
-                        <h2 class="mt-3 flex select-none flex-wrap items-center gap-1 text-gray-900 font-bold">{{$event->category_id ? $event->category->name :"Nezadané"}}</h2>
+                        <h2 class="mt-10 text-base text-slate-100 font-bold pb-3">Kategória</h2>
+                        <h2 class="mt-2 flex select-none justify-center flex-wrap items-center gap-1 text-slate-100 bg-gray-900 rounded-lg border border-gray-900 shadow px-6 py-2 font-bold">{{$event->category_id ? $event->category->name :"Nezadané"}}</h2>
                         @if($event->price_category_id == 3)
-                            <h2 class="mt-8 text-base text-gray-900">Podujatie je zdarma</h2>
+                            <h2 class="mt-8 text-base text-slate-100">Podujatie je zdarma</h2>
                         @else
-                            <h2 class="mt-8 text-base text-gray-900">Zvolte cenovú kategóriu</h2>
+                            <h2 class="mt-10 text-base text-slate-100 font-bold">Zvolte cenovú kategóriu</h2>
                             <div class="mt-3 flex select-none flex-wrap items-center gap-1 ">
                                 @foreach($priceTypes as $priceType)
                                     <label @if($priceType->default) x-init="$nextTick(() => { priceType={{$priceType->price}} })" @endif>
                                         <input type="radio" name="priceType" value="{{$priceType->id}}" x-on:change="editAmountPrice({{$priceType->price}})" class="peer sr-only" {{$priceType->default ? "checked" : ""}} />
-                                        <p class="peer-checked:bg-gray-900 peer-checked:text-white hover:bg-gray-800 hover:text-white rounded-lg border border-black px-6 py-2 font-bold">{{$priceType->name}}</p>
+                                        <p class="text-slate-400 shadow peer-checked:bg-gray-900 peer-checked:text-white hover:bg-gray-800 hover:text-white rounded-lg border border-black px-6 py-2 font-bold transition-all duration-200 ease-in-out focus:shadow">{{$priceType->name}}</p>
                                         @if($priceType->price)
-                                            <span class="mt-1 block text-center text-xs">{{$priceType->price}} €</span>
+                                            <span class="mt-1 block text-center text-xs text-slate-100">{{$priceType->price}} €</span>
                                         @endif
                                     </label>
                                 @endforeach
                             </div>
                         @endif
-                        <h2 class="mt-8 text-base text-gray-900 pb-3">Zvoľte množstvo</h2>
+                        <h2 class="mt-8 text-base text-slate-100 pb-3 font-bold">Zvoľte množstvo</h2>
                         <div class="mt-2 flex select-none flex-wrap items-center gap-1">
                             <input type="number" name="amount" id="number-input" aria-describedby="helper-text-explanation" class="text-xl font-bold rounded-lg border-3 border-gray-800 px-6 py-2 font-bold" min="1"  :value="amount" x-model="amount" x-on:change="editAmount()" required>
                         </div>
                         <div class="mt-8 flex flex-col items-center justify-between space-y-4 border-t border-b py-4 sm:flex-row sm:space-y-0">
+                            
                             @if($event->price_category_id < 3)
-                                <input x-init="$nextTick(() => {editAmount()})" type="number" name="sum" x-model="sum"class="text-3xl font-bold border-0" {{$event->price_category_id == 2 ? "" : "disabled"}}>
+                                <input x-init="$nextTick(() => {editAmount()})" type="number" name="sum" x-model="sum"class="font-bold border-0" {{$event->price_category_id == 2 ? "" : "disabled"}}>
                             @endif
-
-
-                            <button type="submit" class="inline-flex items-center justify-center rounded-md border-2 border-transparent bg-gray-900 bg-none px-12 py-3 text-center text-base font-bold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800">
+                            
+                            <button type="submit" class="inline-flex items-center justify-center rounded-md border-2 border-transparent bg-gray-900 bg-none px-12 py-3 text-center text-xs font-bold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                                 </svg>
-                                Pridať do košíku
+                            <!--Pridať do košíku-->
                             </button>
                         </div>
                     </form>
@@ -81,7 +84,7 @@
                         </li>
                     </ul>
                 </div>
-
+                
                 <div class="lg:col-span-3">
                     <div class="border-b border-gray-300">
                         <nav class="flex gap-4">
@@ -162,6 +165,6 @@
                 },
             }))
         })
-    </script>
+        </script>
 
 </x-layout>
