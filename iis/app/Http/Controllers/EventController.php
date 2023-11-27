@@ -108,6 +108,9 @@ class EventController extends Controller
         $event->capacity = $request['capacity'];
         $event->description = $request['description'];
         $event->save();
+        if($request->logo){
+            $this->storeLogo($request,$event);
+        }
         return redirect('/')->with('message','Event Updated');
     }
     public function storeLogo(Request $request,Event $event)
@@ -137,8 +140,7 @@ class EventController extends Controller
         ]);
         $event = Event::create($form_fields);
         $event->venue_id = 1;
-        $event-> Auth::user()->id;
-        $event->host_id = 1;
+        $event->host_id = Auth::user()->id;
         $priceTypeForm = [
             'event_id' => $event->id,
             'default' => 1
@@ -164,7 +166,7 @@ class EventController extends Controller
         if($request->logo){
             $this->storeLogo($request,$event);
         }
-        return redirect()->back();
+        return redirect()->route('event_detail', ['event' => $event->id]);
     }
 
 
