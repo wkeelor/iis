@@ -29,7 +29,7 @@
                     <form action="{{route('basket_add')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <h2 class="mt-8 text-base text-gray-900 pb-3">Kategória</h2>
-                        <h2 class="mt-3 flex select-none flex-wrap items-center gap-1 text-gray-900 font-bold">{{$event->category ??"Nezadané"}}</h2>
+                        <h2 class="mt-3 flex select-none flex-wrap items-center gap-1 text-gray-900 font-bold">{{$event->category_id ? $event->category->name :"Nezadané"}}</h2>
                         @if($event->price_category_id == 3)
                             <h2 class="mt-8 text-base text-gray-900">Podujatie je zdarma</h2>
                         @else
