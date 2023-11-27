@@ -17,7 +17,7 @@ class RatingController extends Controller
 
         $ratings = new Rating();
 
-        $ratings->user_id = auth()->id(); 
+        $ratings->user_id = auth()->id();
         $ratings->event_id = $validatedData['event_id'];
 
         $ratings->rating = $validatedData['rating'];
@@ -26,5 +26,12 @@ class RatingController extends Controller
         $ratings->save();
 
         return redirect()->back()->with('success', 'Rating submitted successfully.');
+    }
+
+    public function event_ratings(Event $event){
+        $ratings = Rating::where('event_id',$event->id)->get();
+        return view('reviews.reviews',[
+            'ratings' => $ratings
+        ]);
     }
 }

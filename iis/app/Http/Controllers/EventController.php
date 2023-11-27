@@ -54,7 +54,9 @@ class EventController extends Controller
 
     //show single
     public function show(Event $event){
-        $averageRating = $event->ratings()->avg('rating');
+        $averageRating = $event->ratings->avg('rating');
+        $countRating = $event->ratings->count();
+        $ratings = $event->ratings;
         $event->averageRating = $averageRating;
         $priceTypes = DB::table('price_types')->select('*')->where([
             ['event_id', $event->id]
@@ -62,7 +64,9 @@ class EventController extends Controller
         return view('events.event', [
             'event' => $event,
             'averageRating' => $averageRating,
-            'priceTypes' => $priceTypes
+            'priceTypes' => $priceTypes,
+            'countRating' => $countRating,
+            'ratings' => $ratings
         ]);
     }
 

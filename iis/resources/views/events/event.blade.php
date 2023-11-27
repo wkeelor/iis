@@ -8,7 +8,7 @@
                     <div class="lg:flex lg:items-start">
                         <div class="lg:order-2 lg:ml-5">
                             <div class="max-w-xl overflow-hidden rounded-lg">
-                                <img class="h-full w-full max-w-full object-cover" src="{{ $event->logo ? asset($event->logo) : asset('images/wonka.png') }}" alt="" />
+                                <img class="h-full w-full max-w-full object-cover" src="{{ $event->logo ? asset($event->logo) : asset('images/logotickify.png') }}" alt="" />
                             </div>
                         </div>
                     </div>
@@ -19,23 +19,12 @@
 
                     <div class="mt-5 flex items-center">
                         <div class="flex items-center">
-                            <svg class="block h-4 w-4 align-middle text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" class=""></path>
-                            </svg>
-                            <svg class="block h-4 w-4 align-middle text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" class=""></path>
-                            </svg>
-                            <svg class="block h-4 w-4 align-middle text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" class=""></path>
-                            </svg>
-                            <svg class="block h-4 w-4 align-middle text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" class=""></path>
-                            </svg>
-                            <svg class="block h-4 w-4 align-middle text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" class=""></path>
-                            </svg>
+                            @php($averageRating = $event->averageRating)
+                            @include('reviews.average_rating')
+                            <span
+                                class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">{{ number_format($event->averageRating,2) }}</span>
                         </div>
-                        <p class="ml-2 text-sm font-medium text-gray-500">1,209 Reviews</p>
+                        <p class="ml-2 text-sm font-medium text-gray-500">{{$countRating.' Reviews'}}</p>
                     </div>
                     <form action="{{route('basket_add')}}" method="POST" enctype="multipart/form-data">
                         @csrf
@@ -96,19 +85,64 @@
                 <div class="lg:col-span-3">
                     <div class="border-b border-gray-300">
                         <nav class="flex gap-4">
-                            <a href="#" title="" class="border-b-2 border-gray-900 py-4 text-sm font-medium text-gray-900 hover:border-gray-400 hover:text-gray-800"> Description </a>
+                            <a href="#" title="" class="tab-link border-b-2  py-4 text-sm font-medium text-gray-900 hover:border-gray-400 hover:text-gray-800" data-tab="description">Description</a>
 
-                            <a href="#" title="" class="inline-flex items-center border-b-2 border-transparent py-4 text-sm font-medium text-gray-600">
+                            <a href="#" title="" class="tab-link inline-flex items-center border-b-2 border-transparent py-4 text-sm font-medium text-gray-600" data-tab="reviews">
                                 Reviews
-                                <span class="ml-2 block rounded-full bg-gray-500 px-2 py-px text-xs font-bold text-gray-100"> 1,209 </span>
+                                <span class="ml-2 block rounded-full bg-gray-500 px-2 py-px text-xs font-bold text-gray-100">{{$countRating}} </span>
                             </a>
                         </nav>
                     </div>
 
-                    <div class="mt-8 flow-root sm:mt-12">
+                    <div id="descriptionTab" class="tab-content mt-8 flow-root sm:mt-12">
                         {{$event->description}}
                     </div>
+                    <div id="reviewsTab" class="tab-content mt-8 flow-root sm:mt-12" style="display: none;">
+                        <x-reviews :ratings="$ratings" :event="$event"/>
+                    </div>
                 </div>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        // Add click event listeners to tab links
+                        const tabLinks = document.querySelectorAll('.tab-link');
+                        tabLinks.forEach(link => {
+                            link.addEventListener('click', function (event) {
+                                event.preventDefault();
+                                const tabName = this.getAttribute('data-tab');
+                                showTab(tabName);
+                                setActiveTab(link);
+                            });
+                        });
+
+                        // Function to show/hide tabs
+                        function showTab(tabName) {
+                            document.getElementById('descriptionTab').style.display = tabName === 'description' ? 'block' : 'none';
+                            document.getElementById('reviewsTab').style.display = tabName === 'reviews' ? 'block' : 'none';
+                        }
+
+                        // Function to set active tab
+                        function setActiveTab(activeLink) {
+                            tabLinks.forEach(link => link.classList.remove('active'));
+                            activeLink.classList.add('active');
+                        }
+
+                        // Set "Description" tab as active by default
+                        const defaultTab = 'description';
+                        showTab(defaultTab);
+
+                        // Find and set the active class for the default tab link
+                        const defaultTabLink = document.querySelector(`[data-tab="${defaultTab}"]`);
+                        setActiveTab(defaultTabLink);
+                    });
+                </script>
+
+                <style>
+                    /* Add this style to your CSS to apply the underline effect */
+                    .tab-link.active {
+                        border-bottom: 2px solid #000; /* Change the color as needed */
+                    }
+                </style>
             </div>
         </div>
     </section>
