@@ -14,7 +14,7 @@
                 </div>
 
                 <div class="lg:col-span-2 lg:row-span-2 lg:row-end-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 p-10 "> <!--bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-200 dark:border-gray-300 p-10 -->
-                    
+
                     <!--<div class="lg:col-span-2 lg:row-span-2 lg:row-end-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-100 dark:border-gray-100 p-10">
                     </div>-->
                         <h1 class="sm: text-2xl font-bold text-slate-100 sm:text-3xl">{{$event->name}}</h1>
@@ -54,11 +54,11 @@
                             <input type="number" name="amount" id="number-input" aria-describedby="helper-text-explanation" class="text-xl font-bold rounded-lg border-3 border-gray-800 px-6 py-2 font-bold" min="1"  :value="amount" x-model="amount" x-on:change="editAmount()" required>
                         </div>
                         <div class="mt-8 flex flex-col items-center justify-between space-y-4 border-t border-b py-4 sm:flex-row sm:space-y-0">
-                            
+
                             @if($event->price_category_id < 3)
                                 <input x-init="$nextTick(() => {editAmount()})" type="number" name="sum" x-model="sum"class="font-bold border-0" {{$event->price_category_id == 2 ? "" : "disabled"}}>
                             @endif
-                            
+
                             <button type="submit" class="inline-flex items-center justify-center rounded-md border-2 border-transparent bg-gray-900 bg-none px-12 py-3 text-center text-xs font-bold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
@@ -84,7 +84,7 @@
                         </li>
                     </ul>
                 </div>
-                
+
                 <div class="lg:col-span-3">
                     <div class="border-b border-gray-400">
                         <nav class="flex gap-4">
@@ -94,6 +94,9 @@
                                 Reviews
                                 <span class="ml-2 block rounded-full bg-gray-500 px-2 py-px text-xs font-bold text-gray-100">{{$countRating}} </span>
                             </a>
+                            @if(Auth::user() && ( Auth::user()->id == $event->host_id || Auth::user()->role_id >= 2))
+                            <a href="#" title="" class="tab-link border-b-2  py-4 text-sm font-medium text-gray-900 hover:border-gray-400 hover:text-gray-800" data-tab="price_types">Typy cien</a>
+                            @endif
                         </nav>
                     </div>
 
@@ -102,6 +105,10 @@
                     </div>
                     <div id="reviewsTab" class="tab-content mt-8 flow-root sm:mt-12" style="display: none;">
                         <x-reviews :ratings="$ratings" :event="$event"/>
+                    </div>
+                    <div id="priceTab" class="tab-content mt-8 flow-root sm:mt-12" style="display: none;">
+                        @php($types = DB::table('price_types')->where('event_id',$event->id)->get())
+                        <x-price_types :event="$event" :types="$types"/>
                     </div>
                 </div>
 
@@ -122,6 +129,7 @@
                         function showTab(tabName) {
                             document.getElementById('descriptionTab').style.display = tabName === 'description' ? 'block' : 'none';
                             document.getElementById('reviewsTab').style.display = tabName === 'reviews' ? 'block' : 'none';
+                            document.getElementById('priceTab').style.display = tabName === 'price_types' ? 'block' : 'none';
                         }
 
                         // Function to set active tab

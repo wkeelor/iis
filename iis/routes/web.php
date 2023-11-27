@@ -59,6 +59,9 @@ Route::post('/categories/create',[\App\Http\Controllers\CategoryController::clas
 Route::get('/events/approve/{event}',[\App\Http\Controllers\EventController::class, 'approve'])->name('event_approve');
 Route::get('/events/decline/{event}',[\App\Http\Controllers\EventController::class, 'decline'])->name('event_decline');
 Route::get('/events/request/{event}',[\App\Http\Controllers\EventController::class, 'request'])->name('event_request');
+Route::delete('/events/type/{type}',[\App\Http\Controllers\PriceTypeController::class, 'delete'])->name('delete_price_type');
+Route::post('/events/type',[\App\Http\Controllers\PriceTypeController::class, 'create_type'])->name('add_price_type');
+
 
 Route::get('/venues/create/form',[\App\Http\Controllers\VenueController::class, 'add_show'])->name('add_venue_show');
 Route::post('/venues/create',[\App\Http\Controllers\VenueController::class, 'add'])->name('add_venue');

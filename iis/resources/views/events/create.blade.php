@@ -67,6 +67,24 @@
                             <option value="3">Zdarma</option>
                         </select>
                   </div>
+                    <div class="mb-8"> <!-- Increased margin-bottom for more space -->
+                        <label for="category_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kategorie</label>
+                        <select id="category_id" name="category_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value="" selected >Not selected</option>
+                            @foreach ($shared_categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-8"> <!-- Increased margin-bottom for more space -->
+                        <label for="venue_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Miesta</label>
+                        <select id="venue_id" name="venue_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value="" selected >Not selected</option>
+                            @foreach ($shared_venues as $venue)
+                                <option value="{{ $venue->id }}">{{ $venue->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="mb-6" x-show="selectedOption === '1'">
                         <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Základná cena</label>
                         <input type="number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="price"/>

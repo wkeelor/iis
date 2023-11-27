@@ -122,7 +122,7 @@
                 </div>
 
                 <div>
-                    <input type="text" placeholder="Enter review" name="review" class="w-full mb-3 px-4 py-2 border border-gray-300 rounded text-gray-300" required>
+                    <input type="text" placeholder="Enter review" name="review" class="w-full mb-3 px-4 py-2 border border-gray-300 rounded text-black" required>
                 </div>
 
                 <!-- send and close -->

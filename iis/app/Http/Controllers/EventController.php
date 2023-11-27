@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\PriceType;
+use App\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -97,9 +98,12 @@ class EventController extends Controller
             'name' => 'required',
             'start_time' => 'required',
             'end_time' => 'required',
+            'venue_id' => 'required',
             'website' => ['nullable','regex:/^(https?:\/\/)([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/i'],
             'capacity' => [],
-            'description' => []
+            'description' => [],
+            'price_category_id' => 'required',
+            'category_id' => []
         ]);
         $event->name = $request['name'];
         $event->start_time = $request['start_time'];
@@ -107,6 +111,9 @@ class EventController extends Controller
         $event->website = $request['website'];
         $event->capacity = $request['capacity'];
         $event->description = $request['description'];
+        $event->venue_id = $request['venue_id'];
+        $event->price_category_id = $request['price_category_id'];
+        $event->category_id = $request['category_id'];
         $event->save();
         if($request->logo){
             $this->storeLogo($request,$event);
@@ -132,11 +139,12 @@ class EventController extends Controller
             'name' => 'required',
             'start_time' => 'required',
             'end_time' => 'required',
-            //'venue_id' => 'required',
+            'venue_id' => 'required',
             'website' => ['nullable','regex:/^(https?:\/\/)([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/i'],
             'capacity' => [],
             'description' => [],
-            'price_category_id' => 'required'
+            'price_category_id' => 'required',
+            'category_id' => []
         ]);
         $event = Event::create($form_fields);
         $event->venue_id = 1;
@@ -168,6 +176,8 @@ class EventController extends Controller
         }
         return redirect()->route('event_detail', ['event' => $event->id]);
     }
+
+
 
 
 }
