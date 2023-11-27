@@ -368,8 +368,6 @@ class DatabaseSeeder extends Seeder
             'website' => 'https://www.zimnykarneval.sk',
             'venue_id' => 3,
             'price_category_id' => 3,
-            'requested_approval' => true,
-            'approved' => true,
             'logo' => 'images/event_7.png',
             'category_id' => 5
         ]);
@@ -386,7 +384,6 @@ class DatabaseSeeder extends Seeder
             'venue_id' => 4,
             'price_category_id' => 1,
             'requested_approval' => true,
-            'approved' => true,
             'logo' => 'images/event_8.png',
             'category_id' => 3
         ]);
@@ -403,7 +400,7 @@ class DatabaseSeeder extends Seeder
             'venue_id' => 6,
             'price_category_id' => 2,
             'requested_approval' => true,
-            'approved' => true,
+            'approved' => false,
             'logo' => 'images/event_9.png',
             'category_id' => 2
         ]);
@@ -414,15 +411,100 @@ class DatabaseSeeder extends Seeder
             'name' => 'Základní',
             'default' => 1
         ]);
+        \App\Models\PriceType::create([
+            'event_id' => 2,
+            'price' => 500,
+            'name' => 'Základní',
+            'default' => 1
+        ]);
+        \App\Models\PriceType::create([
+            'event_id' => 3,
+            'price' => 500,
+            'name' => 'Základní',
+            'default' => 1
+        ]);
+        \App\Models\PriceType::create([
+            'event_id' => 4,
+            'price' => 500,
+            'name' => 'Základní',
+            'default' => 1
+        ]);
+        \App\Models\PriceType::create([
+            'event_id' => 5,
+            'price' => 500,
+            'name' => 'Základní',
+            'default' => 1
+        ]);
+        \App\Models\PriceType::create([
+            'event_id' => 6,
+            'price' => 500,
+            'name' => 'Základní',
+            'default' => 1
+        ]);
 
         \App\Models\PriceType::create([
             'event_id' => 1,
             'price' => 300,
             'name' => 'Student',
         ]);
+        \App\Models\PriceType::create([
+            'event_id' => 2,
+            'price' => 300,
+            'name' => 'Student',
+        ]);
+
+        \App\Models\PriceType::create([
+            'event_id' => 3,
+            'price' => 300,
+            'name' => 'Student',
+        ]);
+
+        \App\Models\PriceType::create([
+            'event_id' => 4,
+            'price' => 300,
+            'name' => 'Student',
+        ]);
+
+        \App\Models\PriceType::create([
+            'event_id' => 5,
+            'price' => 300,
+            'name' => 'Student',
+        ]);
+
+        \App\Models\PriceType::create([
+            'event_id' => 6,
+            'price' => 300,
+            'name' => 'Student',
+        ]);
+
 
         \App\Models\PriceType::create([
             'event_id' => 1,
+            'price' => 300,
+            'name' => 'Senior',
+        ]);
+        \App\Models\PriceType::create([
+            'event_id' => 2,
+            'price' => 300,
+            'name' => 'Senior',
+        ]);
+        \App\Models\PriceType::create([
+            'event_id' => 3,
+            'price' => 300,
+            'name' => 'Senior',
+        ]);
+        \App\Models\PriceType::create([
+            'event_id' => 4,
+            'price' => 300,
+            'name' => 'Senior',
+        ]);
+        \App\Models\PriceType::create([
+            'event_id' => 5,
+            'price' => 300,
+            'name' => 'Senior',
+        ]);
+        \App\Models\PriceType::create([
+            'event_id' => 6,
             'price' => 300,
             'name' => 'Senior',
         ]);
