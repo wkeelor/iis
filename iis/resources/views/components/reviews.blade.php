@@ -14,7 +14,7 @@
 
     <div class="grid grid-cols-1 gap-4 mx-1 pt-1 p-4">
         @unless(count($ratings) == 0)
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 gap-4">
                 @foreach($ratings as $rating)
                     <x-review_card :review="$rating" :event="$event"/>
                 @endforeach
