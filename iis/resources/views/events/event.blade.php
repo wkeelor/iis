@@ -86,11 +86,11 @@
                 </div>
                 
                 <div class="lg:col-span-3">
-                    <div class="border-b border-gray-300">
+                    <div class="border-b border-gray-400">
                         <nav class="flex gap-4">
-                            <a href="#" title="" class="tab-link border-b-2  py-4 text-sm font-medium text-gray-900 hover:border-gray-400 hover:text-gray-800" data-tab="description">Description</a>
+                            <a href="#" title="" class="tab-link border-b-2  py-4 text-sm font-medium text-gray-900 hover:border-gray-800 hover:text-gray-800" data-tab="description">Description</a>
 
-                            <a href="#" title="" class="tab-link inline-flex items-center border-b-2 border-transparent py-4 text-sm font-medium text-gray-600" data-tab="reviews">
+                            <a href="#" title="" class="tab-link inline-flex items-center border-b-2 text-gray-900 hover: text-gray-800 border-transparent py-4 text-sm font-medium text-gray-600" data-tab="reviews">
                                 Reviews
                                 <span class="ml-2 block rounded-full bg-gray-500 px-2 py-px text-xs font-bold text-gray-100">{{$countRating}} </span>
                             </a>
