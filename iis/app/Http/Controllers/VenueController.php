@@ -71,6 +71,14 @@ class VenueController extends Controller
         ]);
     }
 
+    public function show(Venue $venue){
+        $images = DB::table('venue_img')->where('venue_id',$venue->id)->get();
+        return view('venues.detail', [
+            'venue' => $venue,
+            'images' => $images
+        ]);
+    }
+
     public function edit_show(Venue $venue){
         return view('venues.edit', [
             'venue' => $venue

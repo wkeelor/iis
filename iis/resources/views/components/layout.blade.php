@@ -235,7 +235,7 @@
     </div>
 
 </nav>
-<main>
+<main class="bg-gradient-to-br from-purple-700 via-indigo-600 to-sky-500">
     {{$slot}}
 </main>
 </body>
