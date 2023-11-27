@@ -4,10 +4,10 @@
     <div class="relative overflow-x-auto sm:rounded-lg p-4 rounded-lg">
 
         <!-- Title -->
-        <div class="text-2xl font-bold mb-4">
-            {{$titles[$i]}}
+        <div class="text-2xl font-bold mt-4">
+            <h1 class="mx-8 text-sm w-1/6 px-10 text-center justify-center text-gray-300 shadow bg-gray-800 rounded-tr-lg rounded-tl-lg px-6 py-2 font-bold transition-all duration-200 ease-in-out">    {{$titles[$i]}}</h1>
         </div>
-    <div class="relative overflow-x-auto sm:rounded-lg p-4 rounded-lg">
+    <div class="relative overflow-x-auto sm:rounded-lg px-4 rounded-lg">
         <div class="rounded-lg overflow-hidden">
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
