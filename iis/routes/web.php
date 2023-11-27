@@ -17,7 +17,7 @@ use App\Http\Contorllers;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+Route::post('/filter',[\App\Http\Controllers\EventController::class, 'indexWithFilters'])->name('filter_events');
 Route::get('/',[\App\Http\Controllers\EventController::class, 'index'])->name('all_events');
 Route::get('/my/events',[\App\Http\Controllers\EventController::class, 'all_my'])->name('all_my_events');
 
@@ -80,3 +80,7 @@ Route::delete('/ratings/delete/{rating}', [\App\Http\Controllers\RatingControlle
 Route::get('/ratings/{rating}',[\App\Http\Controllers\RatingController::class, 'edit_show'])->name('edit_rating_show');
 Route::post('/ratings/edit',[\App\Http\Controllers\RatingController::class, 'edit'])->name('edit_rating');
 Route::post('/ratings', [\App\Http\Controllers\RatingController::class, 'store'])->name('ratings.store');
+
+Route::get('/orders', [\App\Http\Controllers\OrderController::class, 'show'])->name('show_orders');
+Route::get('/order_pay/{order_id}', [\App\Http\Controllers\OrderController::class, 'pay'])->name('order_pay');
+Route::get('/order_delete/{order_id}', [\App\Http\Controllers\OrderController::class, 'delete'])->name('order_delete');

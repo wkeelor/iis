@@ -31,9 +31,9 @@ class UserController extends Controller
         if(auth()->attempt($formFields)) {
             $request->session()->regenerate();
 
-            return redirect()->back()->with('message', 'You are now logged in!');
+            return redirect('/')->with('message', 'You are now logged in!');
         }
-        return back()->withErrors(['login' => 'Invalid Credentials'])->withInput()->with('alreadyClicked', 'login');
+        return redirect('/')->withErrors(['login' => 'Invalid Credentials'])->withInput()->with('alreadyClicked', 'login');
     }
     public function edit(Request $request){
         // Edit User

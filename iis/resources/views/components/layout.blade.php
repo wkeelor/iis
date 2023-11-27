@@ -165,7 +165,7 @@
                                     </button>
                                 </li>
                                 <li>
-                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                    <a href="{{ route('show_orders') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                         <i class="fa-solid fa-ticket hover:text-blue-700 dark:hover:text-blue-500"></i>
                                         <span>Vstupenky</span>
                                     </a>

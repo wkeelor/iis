@@ -30,6 +30,7 @@
                         </div>
 
                     <form action="{{route('basket_add')}}" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="event_id" value="{{$event->id}}">
                         @csrf
                         <h2 class="mt-10 text-base text-slate-100 font-bold pb-3">Kategória</h2>
                         <h2 class="mt-2 flex select-none justify-center flex-wrap items-center gap-1 text-slate-100 bg-gray-900 rounded-lg border border-gray-900 shadow px-6 py-2 font-bold">{{$event->category_id ? $event->category->name :"Nezadané"}}</h2>
@@ -40,7 +41,7 @@
                             <div class="mt-3 flex select-none flex-wrap items-center gap-1 ">
                                 @foreach($priceTypes as $priceType)
                                     <label @if($priceType->default) x-init="$nextTick(() => { priceType={{$priceType->price}} })" @endif>
-                                        <input type="radio" name="priceType" value="{{$priceType->id}}" x-on:change="editAmountPrice({{$priceType->price}})" class="peer sr-only" {{$priceType->default ? "checked" : ""}} />
+                                        <input type="radio" name="price_type" value="{{$priceType->id}}" x-on:change="editAmountPrice({{$priceType->price}})" class="peer sr-only" {{$priceType->default ? "checked" : ""}} />
                                         <p class="text-slate-400 shadow peer-checked:bg-gray-900 peer-checked:text-white hover:bg-gray-800 hover:text-white rounded-lg border border-black px-6 py-2 font-bold transition-all duration-200 ease-in-out focus:shadow">{{$priceType->name}}</p>
                                         @if($priceType->price)
                                             <span class="mt-1 block text-center text-xs text-slate-100">{{$priceType->price}} €</span>
@@ -56,7 +57,7 @@
                         <div class="mt-8 flex flex-col items-center justify-between space-y-4 border-t border-b py-4 sm:flex-row sm:space-y-0">
 
                             @if($event->price_category_id < 3)
-                                <input x-init="$nextTick(() => {editAmount()})" type="number" name="sum" x-model="sum"class="font-bold border-0" {{$event->price_category_id == 2 ? "" : "disabled"}}>
+                                <input x-init="$nextTick(() => {editAmount()})" type="number" name="price" x-model="sum"class="font-bold border-0" {{$event->price_category_id == 2 ? "" : "disabled"}}>
                             @endif
 
                             <button type="submit" class="inline-flex items-center justify-center rounded-md border-2 border-transparent bg-gray-900 bg-none px-12 py-3 text-center text-xs font-bold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800">
@@ -173,6 +174,6 @@
                 },
             }))
         })
-        </script>
+    </script>
 
 </x-layout>

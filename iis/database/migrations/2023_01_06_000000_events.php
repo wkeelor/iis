@@ -34,6 +34,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->boolean('approved')->nullable();
             $table->boolean('requested_approval')->nullable();
+            $table->integer('base_price')->nullable();
             $table->timestamps();
         });
     }

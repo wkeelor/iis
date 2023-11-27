@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Event;
 use App\Models\PriceType;
 use App\Models\Rating;
+use App\Models\Venue;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -12,13 +15,79 @@ class EventController extends Controller
 {
     //show all
     public function index(){
-        $events =  Event::where('approved', true)->get()->map(function ($event) {
+        $nowDate = date('Y-m-d H:i:s');
+        $venues = Venue::where('approved', true)->get();
+        $categories = Category::where('approved', true)->get();
+        $events =  Event::where('approved', true)
+            ->whereDate('end_time', '>',  $nowDate)
+            ->whereDate('start_time', '>',  $nowDate)
+            ->get()
+            ->map(function ($event) {
             $averageRating = $event->ratings()->avg('rating'); // Assuming 'rating' is the column name in your ratings table
             $event->averageRating = $averageRating; // Add averageRating as a custom attribute
             return $event;
         });
         return view('events.events',[
-            'events' => $events
+            'events' => $events,
+            'venues' => $venues,
+            'categories' => $categories
+        ]);
+    }
+
+    public function indexWithFilters(Request $request){
+        $data = $request->all();
+        $categories = [];
+        $venues = [];
+        foreach ($data as $key => $item){
+            if(str_contains($key, "category"))
+                $categories[] = $item;
+            if(str_contains($key, "venue"))
+                $venues[] = $item;
+            if($item && (str_contains($key, "start-") || str_contains($key, "end-"))){
+                $dateTime = DateTime::createFromFormat('m/d/Y', $item);
+                $data[$key] = $dateTime->format('Y-m-d H:i:s');
+            }
+        }
+
+        $nowDate = date('Y-m-d H:i:s');
+        $eventsQuery = Event::where('approved', true);
+        if(!empty($categories))
+            $eventsQuery->whereIn('category_id', $categories);
+        if(!empty($venues))
+            $eventsQuery->whereIn('venue_id', $venues);
+
+        if(!empty($data['min_range']))
+            $eventsQuery->where('base_price', '>=', $data['min_range']);
+
+        if(!empty($data['max_range']))
+            $eventsQuery->where('base_price', '<=', $data['max_range']);
+
+        if (!empty($data['start-start']))
+            $eventsQuery->whereDate('start_time', '>=',  $data['start-start']);
+        else
+            $eventsQuery->whereDate('start_time', '>=',  $nowDate);
+
+        if (!empty($data['end-start']))
+            $eventsQuery->whereDate('start_time', '<=',  $data['end-start']);
+
+        if (!empty($data['start-end']))
+            $eventsQuery->whereDate('end_time', '>=',  $data['start-end']);
+
+        if (!empty($data['end-end']))
+            $eventsQuery->whereDate('end_time', '<=',  $data['end-end']);
+
+        $venues = Venue::where('approved', true)->get();
+        $categories = Category::where('approved', true)->get();
+        $events = $eventsQuery->get()
+            ->map(function ($event) {
+                $averageRating = $event->ratings()->avg('rating'); // Assuming 'rating' is the column name in your ratings table
+                $event->averageRating = $averageRating; // Add averageRating as a custom attribute
+                return $event;
+            });
+        return view('events.events',[
+            'events' => $events,
+            'venues' => $venues,
+            'categories' => $categories
         ]);
     }
 
@@ -146,6 +215,7 @@ class EventController extends Controller
             'price_category_id' => 'required',
             'category_id' => []
         ]);
+        $form_fields['base_price'] = $request->price;
         $event = Event::create($form_fields);
         $event->venue_id = 1;
         $event->host_id = Auth::user()->id;

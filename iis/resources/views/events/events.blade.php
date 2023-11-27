@@ -1,6 +1,6 @@
 <x-layout>
     <div class="flex">
-        <x-sidebar>
+        <x-sidebar :categories="$categories" :venues="$venues">
         </x-sidebar>
         <div class="grid grid-cols-3 gap-4 mx-1 pt-1 p-4">
             @unless(count($events) == 0)
