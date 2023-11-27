@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 use App\Models\Venue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Http\UploadedFile;
+
 
 
 class VenueController extends Controller
@@ -28,6 +32,9 @@ class VenueController extends Controller
         $venue->province = $request['province'];
         $venue->country = $request['country'];
         $venue->save();
+        if($request->logo){
+            $this->storeLogo($request,$venue);
+        }
         $user = Auth::user();
         if($user->role_id >= 2){
             return redirect('/venues/moderate');
@@ -51,7 +58,10 @@ class VenueController extends Controller
 
         $venue = Venue::create($form_fields);
         $venue->save();
-        return redirect()->back();
+        if($request->logo){
+            $this->storeLogo($request,$venue);
+        }
+        return redirect()->route('venue_detail', ['venue' => $venue->id]);
     }
 
     public function approve(Venue $venue){
@@ -84,6 +94,16 @@ class VenueController extends Controller
             'venue' => $venue
         ]);
     }
+    public function add_show(){
+        return view('venues.create', [
+        ]);
+    }
+
+    public function add_image_show(Venue $venue){
+        return view('venues.images', [
+            'venue' => $venue
+        ]);
+    }
 
     public function show_moderator(){
         $declined =  Venue::where('approved', false)->get();
@@ -97,6 +117,26 @@ class VenueController extends Controller
         return view('venues.moderator_venues', [
             'jsons' => $jsons,
         ]);
+    }
+
+    public function storeImage(Request $request)
+    {
+        $image = $request->file('image');
+        $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('images'), $imageName);
+        DB::table('venue_img')->insert(['venue_id' => $request->id, 'path' => 'images/' . $imageName]);
+        return redirect()->route('venue_detail', ['venue' => $request->id]);
+    }
+    public function storeLogo(Request $request,Venue $venue)
+    {
+        $image = $request->file('logo');
+        $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('images'), $imageName);
+
+        // Save the image path in the database
+        $venue->logo = 'images/' . $imageName;
+        $venue->save();
+
     }
 
 }

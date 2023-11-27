@@ -60,13 +60,20 @@ Route::get('/events/approve/{event}',[\App\Http\Controllers\EventController::cla
 Route::get('/events/decline/{event}',[\App\Http\Controllers\EventController::class, 'decline'])->name('event_decline');
 Route::get('/events/request/{event}',[\App\Http\Controllers\EventController::class, 'request'])->name('event_request');
 
+Route::get('/venues/create/form',[\App\Http\Controllers\VenueController::class, 'add_show'])->name('add_venue_show');
 Route::post('/venues/create',[\App\Http\Controllers\VenueController::class, 'add'])->name('add_venue');
 Route::post('/venues/edit',[\App\Http\Controllers\VenueController::class, 'edit_venue'])->name('edit_venues');
+Route::get('/venues/image/{venue}',[\App\Http\Controllers\VenueController::class, 'add_image_show'])->name('add_image_show');
+Route::post('/venues/image',[\App\Http\Controllers\VenueController::class, 'storeImage'])->name('add_image');
 Route::get('/venues/edit/{venue}',[\App\Http\Controllers\VenueController::class, 'edit_show'])->name('edit_venues_show');
 Route::get('/venues/approve/{venue}',[\App\Http\Controllers\VenueController::class, 'approve'])->name('venue_approve');
 Route::get('/venues/decline/{venue}',[\App\Http\Controllers\VenueController::class, 'decline'])->name('venue_decline');
 Route::get('/venues/moderate',[\App\Http\Controllers\VenueController::class, 'show_moderator'])->name('venues_moderate');
 Route::get('/venues',[\App\Http\Controllers\VenueController::class, 'index'])->name('all_venues');
 Route::get('/venues/{venue}',[\App\Http\Controllers\VenueController::class, 'show'])->name('venue_detail');
+
+/*Route::get('/event/ratings/{rating}',[\App\Http\Controllers\RatingController::class, 'event_ratings'])->name('event_ratings');*/
+Route::delete('/ratings/delete/{rating}', [\App\Http\Controllers\RatingController::class, 'delete'])->name('delete_rating');
+Route::get('/ratings/{rating}',[\App\Http\Controllers\RatingController::class, 'edit_show'])->name('edit_rating_show');
+Route::post('/ratings/edit',[\App\Http\Controllers\RatingController::class, 'edit'])->name('edit_rating');
 Route::post('/ratings', [\App\Http\Controllers\RatingController::class, 'store'])->name('ratings.store');
-Route::get('/ratings/{event}',[\App\Http\Controllers\RatingController::class, 'event_ratings'])->name('event_ratings');

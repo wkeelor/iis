@@ -1,15 +1,16 @@
 <div class="flex flex-col">
     @if(Auth::user())
-        <button data-tooltip-target="tooltip-create" id="openFormBtn" class="inline-flex items-center justify-center rounded-md border-2 border-transparent bg-gray-900 bg-none px-12 py-3 text-center text-xs font-bold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800 w-1/12">
-            <div id="tooltip-create" role="tooltip"
-                 class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                Pridať hodnotenie
-                <div class="tooltip-arrow" data-popper-arrow></div>
-            </div>
-        <!--    <i class="fa-solid fa-pen-to-square hover:text-blue-700 dark:hover:text-blue-500"></i> -->
-        +
-        </button>
+        <div class="flex items-center justify-end">
+            <button data-tooltip-target="tooltip-create" id="openFormBtn" class="flex items-center justify-center w-10 h-10 bg-purple-700 hover:bg-purple-800 text-white rounded-full focus:ring-4 focus:outline-none focus:ring-purple-300 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800">
+                <div id="tooltip-create" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                    Pridať hodnotenie
+                    <div class="tooltip-arrow" data-popper-arrow></div>
+                </div>
+                <i class="fa-solid fa-plus hover:text-blue-700 dark:hover:text-blue-500"></i>
+            </button>
+        </div>
     @endif
+
 
     @include('reviews.create')
 
