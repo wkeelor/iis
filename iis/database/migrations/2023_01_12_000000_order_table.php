@@ -11,12 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('order_table', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id('id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('event_id');
+            $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
+            $table->integer('price')->nullable();
+            $table->integer('amount');
+            $table->integer('paid')->nullable();
+            $table->integer('price_type')->nullable();
+            $table->integer('enabled')->nullable();
             $table->timestamps();
-            $table->string('payment_method')->enum(['credit'], ['debit'], ['paypal']);
         });
     }
 

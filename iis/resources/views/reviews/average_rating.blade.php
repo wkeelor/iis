@@ -1,15 +1,15 @@
 <style>
 .display-rate svg {
     display: inline-block;
-    vertical-align: middle; 
+    vertical-align: middle;
 }
 
 
 </style>
 <div class="display-rate">
     @php
-        $fullStars = floor($event->averageRating);
-        $halfStar = $event->averageRating - $fullStars >= 0.5 ? 1 : 0;
+        $fullStars = floor($averageRating);
+        $halfStar = $averageRating - $fullStars >= 0.5 ? 1 : 0;
         $emptyStars = 5 - $fullStars - $halfStar;
     @endphp
 

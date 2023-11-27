@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Event;
 use App\Models\PriceType;
+use App\Models\Rating;
+use App\Models\Venue;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -11,13 +15,79 @@ class EventController extends Controller
 {
     //show all
     public function index(){
-        $events =  Event::where('approved', true)->get()->map(function ($event) {
+        $nowDate = date('Y-m-d H:i:s');
+        $venues = Venue::where('approved', true)->get();
+        $categories = Category::where('approved', true)->get();
+        $events =  Event::where('approved', true)
+            ->whereDate('end_time', '>',  $nowDate)
+            ->whereDate('start_time', '>',  $nowDate)
+            ->get()
+            ->map(function ($event) {
             $averageRating = $event->ratings()->avg('rating'); // Assuming 'rating' is the column name in your ratings table
             $event->averageRating = $averageRating; // Add averageRating as a custom attribute
             return $event;
         });
         return view('events.events',[
-            'events' => $events
+            'events' => $events,
+            'venues' => $venues,
+            'categories' => $categories
+        ]);
+    }
+
+    public function indexWithFilters(Request $request){
+        $data = $request->all();
+        $categories = [];
+        $venues = [];
+        foreach ($data as $key => $item){
+            if(str_contains($key, "category"))
+                $categories[] = $item;
+            if(str_contains($key, "venue"))
+                $venues[] = $item;
+            if($item && (str_contains($key, "start-") || str_contains($key, "end-"))){
+                $dateTime = DateTime::createFromFormat('m/d/Y', $item);
+                $data[$key] = $dateTime->format('Y-m-d H:i:s');
+            }
+        }
+
+        $nowDate = date('Y-m-d H:i:s');
+        $eventsQuery = Event::where('approved', true);
+        if(!empty($categories))
+            $eventsQuery->whereIn('category_id', $categories);
+        if(!empty($venues))
+            $eventsQuery->whereIn('venue_id', $venues);
+
+        if(!empty($data['min_range']))
+            $eventsQuery->where('base_price', '>=', $data['min_range']);
+
+        if(!empty($data['max_range']))
+            $eventsQuery->where('base_price', '<=', $data['max_range']);
+
+        if (!empty($data['start-start']))
+            $eventsQuery->whereDate('start_time', '>=',  $data['start-start']);
+        else
+            $eventsQuery->whereDate('start_time', '>=',  $nowDate);
+
+        if (!empty($data['end-start']))
+            $eventsQuery->whereDate('start_time', '<=',  $data['end-start']);
+
+        if (!empty($data['start-end']))
+            $eventsQuery->whereDate('end_time', '>=',  $data['start-end']);
+
+        if (!empty($data['end-end']))
+            $eventsQuery->whereDate('end_time', '<=',  $data['end-end']);
+
+        $venues = Venue::where('approved', true)->get();
+        $categories = Category::where('approved', true)->get();
+        $events = $eventsQuery->get()
+            ->map(function ($event) {
+                $averageRating = $event->ratings()->avg('rating'); // Assuming 'rating' is the column name in your ratings table
+                $event->averageRating = $averageRating; // Add averageRating as a custom attribute
+                return $event;
+            });
+        return view('events.events',[
+            'events' => $events,
+            'venues' => $venues,
+            'categories' => $categories
         ]);
     }
 
@@ -54,7 +124,9 @@ class EventController extends Controller
 
     //show single
     public function show(Event $event){
-        $averageRating = $event->ratings()->avg('rating');
+        $averageRating = $event->ratings->avg('rating');
+        $countRating = $event->ratings->count();
+        $ratings = $event->ratings;
         $event->averageRating = $averageRating;
         $priceTypes = DB::table('price_types')->select('*')->where([
             ['event_id', $event->id]
@@ -62,7 +134,9 @@ class EventController extends Controller
         return view('events.event', [
             'event' => $event,
             'averageRating' => $averageRating,
-            'priceTypes' => $priceTypes
+            'priceTypes' => $priceTypes,
+            'countRating' => $countRating,
+            'ratings' => $ratings
         ]);
     }
 
@@ -93,9 +167,12 @@ class EventController extends Controller
             'name' => 'required',
             'start_time' => 'required',
             'end_time' => 'required',
+            'venue_id' => 'required',
             'website' => ['nullable','regex:/^(https?:\/\/)([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/i'],
             'capacity' => [],
-            'description' => []
+            'description' => [],
+            'price_category_id' => 'required',
+            'category_id' => []
         ]);
         $event->name = $request['name'];
         $event->start_time = $request['start_time'];
@@ -103,7 +180,13 @@ class EventController extends Controller
         $event->website = $request['website'];
         $event->capacity = $request['capacity'];
         $event->description = $request['description'];
+        $event->venue_id = $request['venue_id'];
+        $event->price_category_id = $request['price_category_id'];
+        $event->category_id = $request['category_id'];
         $event->save();
+        if($request->logo){
+            $this->storeLogo($request,$event);
+        }
         return redirect('/')->with('message','Event Updated');
     }
     public function storeLogo(Request $request,Event $event)
@@ -125,16 +208,17 @@ class EventController extends Controller
             'name' => 'required',
             'start_time' => 'required',
             'end_time' => 'required',
-            //'venue_id' => 'required',
+            'venue_id' => 'required',
             'website' => ['nullable','regex:/^(https?:\/\/)([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/i'],
             'capacity' => [],
             'description' => [],
-            'price_category_id' => 'required'
+            'price_category_id' => 'required',
+            'category_id' => []
         ]);
+        $form_fields['base_price'] = $request->price;
         $event = Event::create($form_fields);
         $event->venue_id = 1;
-        $event-> Auth::user()->id;
-        $event->host_id = 1;
+        $event->host_id = Auth::user()->id;
         $priceTypeForm = [
             'event_id' => $event->id,
             'default' => 1
@@ -160,8 +244,10 @@ class EventController extends Controller
         if($request->logo){
             $this->storeLogo($request,$event);
         }
-        return redirect()->back();
+        return redirect()->route('event_detail', ['event' => $event->id]);
     }
+
+
 
 
 }

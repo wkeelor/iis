@@ -130,15 +130,6 @@
                     </li>
 
                     <li class="flex items-center">
-                        <a data-tooltip-target="tooltip-basket" href="{{ route('basket',['user' => $curr_user->id]) }}" class="flex items-center justify-center hover:bg-gray-100 md:hover:bg-transparent md:p-0 dark:hover:bg-gray-700 md:dark:hover:bg-transparent dark:border-gray-700 p-2" style="color: white;">
-                            <div id="tooltip-basket" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                                Košík
-                                <div class="tooltip-arrow" data-popper-arrow></div>
-                            </div>
-                            <i class="fa-solid fa-basket-shopping fa-xl hover:text-blue-700 dark:hover:text-blue-500 flex items-center justify-center"></i>
-                        </a>
-                    </li>
-                    <li class="flex items-center">
                         <button data-tooltip-target="tooltip-profile" type="button" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom" style="color: white;">
                             <span class="sr-only">Open user menu</span>
                             <div id="tooltip-profile" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
@@ -174,7 +165,7 @@
                                     </button>
                                 </li>
                                 <li>
-                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                    <a href="{{ route('show_orders') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                         <i class="fa-solid fa-ticket hover:text-blue-700 dark:hover:text-blue-500"></i>
                                         <span>Vstupenky</span>
                                     </a>
@@ -235,7 +226,7 @@
     </div>
 
 </nav>
-<main>
+<main class="bg-gradient-to-br from-purple-700 via-indigo-600 to-sky-500">
     {{$slot}}
 </main>
 </body>
