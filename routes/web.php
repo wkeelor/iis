@@ -18,7 +18,7 @@ use App\Http\Contorllers;
 |
 */
 Route::post('/filter',[\App\Http\Controllers\EventController::class, 'indexWithFilters'])->name('filter_events');
-Route::get('/',[\App\Http\Controllers\EventController::class, 'index'])->name('all_events');
+Route::get('/home',[\App\Http\Controllers\EventController::class, 'index'])->name('all_events');
 Route::get('/my/events',[\App\Http\Controllers\EventController::class, 'all_my'])->name('all_my_events');
 
 

@@ -31,9 +31,9 @@ class UserController extends Controller
         if(auth()->attempt($formFields)) {
             $request->session()->regenerate();
 
-            return redirect('/')->with('message', 'You are now logged in!');
+            return redirect('/home')->with('message', 'You are now logged in!');
         }
-        return redirect('/')->withErrors(['login' => 'Invalid Credentials'])->withInput()->with('alreadyClicked', 'login');
+        return redirect('/home')->withErrors(['login' => 'Invalid Credentials'])->withInput()->with('alreadyClicked', 'login');
     }
     public function edit(Request $request){
         // Edit User
@@ -123,12 +123,12 @@ class UserController extends Controller
             // Login
             auth()->login($user);
 
-            return redirect('/')->with('message', 'User created and logged in');
+            return redirect('/home')->with('message', 'User created and logged in');
     }
     // Logout User
     public function logout() {
         auth()->logout();
-        return redirect('/')->with('message', 'You have been logged out!');
+        return redirect('/home')->with('message', 'You have been logged out!');
 
     }
 

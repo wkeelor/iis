@@ -187,7 +187,7 @@ class EventController extends Controller
         if($request->logo){
             $this->storeLogo($request,$event);
         }
-        return redirect('/')->with('message','Event Updated');
+        return redirect('/home')->with('message','Event Updated');
     }
     public function storeLogo(Request $request,Event $event)
     {
